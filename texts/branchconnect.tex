@@ -44,7 +44,7 @@ The workflow of the game is illustrated in Figure~\ref{fig:game_flowchart}
 
 \begin{figure}[ht]
   \begin{center}
-    \includegraphics[width = 0.4\paperwidth]{images/interface/BranchConnectOverview.png}
+    \includegraphics[width = 0.25\paperwidth]{images/system/systemFlowChart.pdf}
     \caption{The workflow of \textit{BranchConnect}. Branch data and user design data are stored on cloud database.}
     \label{fig:game_flowchart}
   \end{center}
@@ -83,6 +83,15 @@ The game is completed once all the target points are connected by a group of bra
 The conditions of joint and group are indicated with simple color-code.
 Once the user finishes positioning, score is updated with weighted sum of parameters.
 Together with the color-code, the score update guides the user to form a valid design.
+An overview is illustrated in Figure \ref{fig:system_flowchart}.
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width = 0.25\paperwidth]{images/system/closestPointAlgorithm.pdf}
+    \caption{Left: an overview of the game system. Right:joint condition checking process.}
+    \label{fig:system_flowchart}
+  \end{center}
+\end{figure}
 
 \subsubsection*{Joint Condition}
 Joint is the essential entity not only in the game but also the entire project including the fabrication process.
@@ -107,7 +116,7 @@ When a branch is connected to one of target point $t_j \in \mathcal{T} $, the $t
 \begin{figure}[ht]
   \begin{center}
     \includegraphics[width = 0.4\paperwidth]{images/system/joint_conditions_2.png}
-    \caption{Joint conditions. a: valid joint. b: invalid for violating the angle. c: invalid tangential connection. d: invalid for connecting on a fixture point. }
+    \caption{Joint conditions. 1.valid joint. 2.invalid for violating the angle. 3.invalid tangential connection. 4.invalid for connecting on a fixture point. }
     \label{fig:joint_condition}
   \end{center}
 \end{figure}
