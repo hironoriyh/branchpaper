@@ -1,0 +1,137 @@
+\section{Experiment}
+A design and fabrication workshop was organized to examine the validity of our system with a specific design target and a location.
+We selected a public community house where people in the community share the space and regularly use the facility.
+Participants are from the community, mainly children aged 10 and under (4, 7, 9 , and 10 years old) and their parents (Figure~\ref{fig:workshop}).
+We specifically selected children with the age range as non-experts without experiences in computational design or digital fabrication, also for observing the clarity and attractiveness of the game.
+
+The goal for the participants is to contribute to design and fabrication process of a screen wall (2m by 0.9m) consisting of 8 rectangles.
+Each rectangle has preset target connection points from 3-5 points.
+Participants are asked to follow the entire process from collecting and fixing the branches on a plate, scanning the plate, complete designs by playing the game, and assembly after the CNC milling.
+% Regarding the game, xx solutions are given by participants and the total duration spent for the game was xx.
+Participants were informed about the goal of the workshop, and each process was introduced by experienced tutors.
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width = 0.4\paperwidth]{images/fabrication/workshop_setup.png}
+    \caption{An overview of the workshop. 1.the overview of the space. 2.cutting 3.preparation 4.scanning 5.retouching 6.playing the game 7.CNC milling.}
+    \label{fig:workshop}
+  \end{center}
+\end{figure}
+
+\subsection{Setup}
+\subsubsection*{System and Hardware Setup}
+We used two iPad minis with iSense scanners attached for scanning branches, and a 3 axis CNC milling router with a 6 mm diameter milling bit.
+We used a laptop PC (Lenovo w240 with intel core i7) for running \textit{Branch Importer} and \textit{G-Code generator}, as well as operating the milling machine.
+The scan area of iSense is 500mm x 500mm, and the milling machine's stroke along z-axis is 70mm, which provide geometric constraints for available branch sizes.
+\textit{BranchConnect} was hosted at \textit{Heroku} cloud server \footnote{ Heroku is a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud. \url{https://www.heroku.com/}},
+and we used \textit{MongoDB} \footnote{ MongoDB is a free and open-source cross-platform document-oriented database program. \url{https://www.mongodb.com/}} as a cloud database.
+
+\subsubsection*{Preparation}
+The participants were asked to collect branches with 2 - 10 cm in diameter.
+The lower bound of the diameter is for milling process would not destroy them, and the upper bound is for the limit of z-stroke of the CNC router.
+The collected branches are cut in arbitrary lengths, not longer than 500 mm due to the limit of scanning area. \\
+
+As our game system and fabrication process take 3D branch shapes as 2D contours with height map, these constraints work positive for the system automatically filtering out branches with large 3D twists.
+We ask participants to scan with iPad + iSense and prepare feasible mesh model by themselves.
+After obtaining mesh models, tutors import models from iPads to a laptop and upload them to database by \textit{Branch Importer}.
+
+
+\subsubsection*{User Experiences with the System}
+After models were uploaded to the server, users can see that their plates are added in the selectable branch plates with their names and locations.
+Users can access to the start page by PC and mobile devices.
+We prepare both options and let participants choose a device.
+
+A user is firstly directed to a start page and asked to submit a user name.
+Secondly, the user is navigated to target frame selection page, and asked to pick one out of eight frames.
+Each frame has different target points.
+The interface also shows the completed branch organizations within each target frame.
+If there are multiple designs, three designs with highest scores are displayed.
+The user can change the currently displayed design by clicking within each frame and choose either starting their design from scratch, or select the design and improve it.
+
+After selecting a target frame, the user goes to branch selection page, displaying 15 plates when the workshop was held.
+In this page, they see the plates made by themselves on the page, as well as their names on the plate.
+The user can select the same plate for designing other target frames.
+By clicking a displayed branch plate, the user is navigated to the game interface.
+After completing to bridge all the target points, the design is automatically uploaded to the database, but the use can continue to design.
+Tutors and participants select design solution for each target frame, and an experienced tutor operates \textit{G-Code Generator} as well as the CNC router.
+Participants were asked to assembly branches after joineries were milled.
+
+\subsection{Results}
+
+\subsubsection*{Collecting Branches}
+The diameter and length constraints for available branches worked as guidelines for participants rather than restricting finding and cutting arbitrary branches.
+After cutting branches in certain lengths, participants fixed branches on plates by thin metal plates with screw holes.
+It was straightforward for them to firmly fix branches so that they are not moved during milling process.
+These fixture points are counted as invalid points in the game where joinery points can not be generated.
+The participants built 3 plates with 3-6 branches fixed on each plate.
+
+\subsubsection*{Model Acquisition}
+iSense 3D scanners come with an intuitive software for scanning and modifying models.
+After we gave an instruction, participants practiced several scans and successfully scanned models without any problem
+
+Each scanning and re-touching took 2-3 minutes, and 30 seconds for generating data by \textit{Branch Importer}.
+In total, we scanned 15 plates, 75 branches, and 35.3m in total length including sub-branches. \todo{check the length again!}
+We got 40 $I$ shaped branches, 19 $V$ shaped branches, and 16 $Y$ shaped branches.
+The result is shown in Figure \ref{fig:scannedplates}.
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width = 0.4\paperwidth]{images/fabrication/all_plates.png}
+    \caption{An overview of all the 15 scanned plates for the workshop. Top raw of each set shows ortho-top views of scanned mesh models, and the bottom raw is the recognized branches assigned random colors.}
+    \label{fig:scannedplates}
+  \end{center}
+\end{figure}
+
+
+\subsubsection*{Game}
+Most participants used iPads for navigating pages and playing the game.
+All the participants understood the goal immediately, however, they had difficulties with user interface, such as rotation and flipping operation by gestures.
+
+One participant switched to play by a PC for more precise control due to the problem.
+All the participants chose to develop their own designs from the scratch, although they had instruction about the "continue existing designs".
+
+Although there is no time limit in the game system, we set 30 minutes for playing the game, and 8 solutions were given by participants.
+xxx frames were completed per participants and xxx participants completed the whole eight target frames.
+The average score is xxx, and average playing duration was xxx to complete each target frame.
+
+\subsubsection*{Design Consensus \todo{this section might be removed}}
+As the target frame selection page can display designs not only from one user but also from all the others at once, we could get an overview of design options.
+The designs are displayed as score descending order but limited numbers, we could find feasible solutions with mostly all the target points were bridged.
+As participants were excited by seeing their branches and designs, we took some of their solutions and their plates for the fabrication although their solutions did not satisfied completion of the game.
+
+\subsubsection*{Fabrication}
+We did not have major problems for converting designs to G-Code.
+The main problem here was the accuracy of acquired contours.
+We observed most of scanned models have occluded regions between plates and branches, which create interpolated faces during solidifying process, resulting in outwardly offsetted contours.
+Six pairs of branches were loosely connected because the calculated contours were 2-3mm eroded than the actual sizes.
+We avoided this problem by trimming branches from 2-5 mm higher than the plate surface.
+After this operation, the rest of connections were tightly connected. \\
+
+We also observed that many milling paths were 5-10 mm off from the center of planned joints.
+Multiple reasons are assumed; such as deformation of mechanical parts of the CNC router, the resolution of acquired contours of branches, misaligned orientation of the plate compared to the scanned model and so forth.
+We modified the \textit{G-Code Generator} so that an operator can freely adjust the absolute origin of the generated milling paths.
+We usually set a marker around the center of the plate.
+After this modification, the misalignment was improved.
+We still observed misaligned joint center but it was 5 mm at the maximum.
+
+\subsection{Discussions}
+-multiple plates
+-design decisions
+-most of plates were already built
+-object detection
+-bad user interface
+-misalighned barnches, orientation detection, interactive fabrication
+
+\subsubsection*{Interface}
+We received several requests by participants regarding interfaces of the system.
+\begin{\begin{itemize}
+  \item multiple plates for designing a target frame.
+  \item designing freely without limiting the number of branches.
+  \item iPad interface needs toggle buttons for keep a branch active.
+
+\end{itemize}}
+
+\subsubsection*{Post tensioning by misaligned joints}
+Branches can be elastically deformed thus they can absorb misaligned joint positions. Branches could absorb 3-5 mm misaligned joint positions due to the elasticity of the wooden materials.
+The misaligned joint positions work as post-tensions in most cases, thus provided tightly fixed compositions.
+We assume that this is only applicable when an applied bending moment and cut surface at a joint is orthogonal or not too much off from orthogonal.

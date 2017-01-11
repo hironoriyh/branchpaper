@@ -1,0 +1,76 @@
+\section{Introduction}
+Modern buildings are characterized by its uniformity; built upon the same principle of construction system, consisting of standardized building component and its assembly process.
+The standardized construction system is characterized by its efficiency in design and production.
+Each component satisfies specified structural performance, enabling to integrate them and calculate the performance of the overall structure.
+On the other hand, excessive standardization converged buildings into similar materials and details, resulting in the detached design from built environment.
+Reacting on the issue, designers and architects actively use local materials not only as inspirational sources, but also as a catalyst of their design to the local context. \cite{oliver1997encyclopedia}.
+
+% As a result, we see similar-looking buildings all over the world.
+%The aesthetic quality of the combination of construction techniques to deal with building components is described as "techtonik".
+% Including management of construction, guidelines for maintenance to building materials and construction techniques, we call it as building starndard.
+
+Taking a look on traditional construction, or even fast back-warding to primitive shelters and huts, locally found resources were naturally used in these buildings.
+The idea of standard in buildings was not invented in the modern times but has been extensively applied as pyramids were built with standardized building blocks.
+The use of diverse non-standard materials can not compete with highly standardized materials and construction system, however, the uniqueness from their diverse shapes is the quality which standard materials can not serve.
+As the material is found locally, building and living get much closer, thus people using a facility can easily commit design and fabrication, fostering the sense of belonging to the community \cite{}.
+Locally found material easily connects design and the context of built environment in this way, however, special skills are typically required to handle these materials, mainly due to the irregular properties.
+
+This paper aims to make the above-mentioned qualities of non-standard materials more accessible with digital technologies.
+We use locally found branches as non-standard resource found almost everywhere not only in country-side but also in urban environment such as parks and along streets.
+% According to the facility maintenance department in the University of Tokyo, the campus (540,000 $m^2$ at Hongo campus) annually produces 70-100 tons of branches by pruning.
+Most of these branches are annually pruned, and then chipped and burned with some cost.
+The size of branches (from 5 -30 cm in diameter) is too small for furniture or other structural applications.
+The diverse shape of branches provide adequate technical challenges in design and fabrication.
+Using high-precision but low-cost scanning devices and personal digital fabrication machines, even non-standard material properties can be analyzed and controlled.
+
+The key technical difficulty with non-standard materials is design.
+Optimization is a straightforward approach: minimize an energy function which integrates structural and fabrication costs.
+This approach, however, is limited to particular design scenario with specific materials.
+Furthermore, the concept of optimum solution is well suited to goals such as efficiency or low-cost, but these goals are not the qualities non-standard materials can compete with standardized construction systems.
+Instead, we take humans in our scan-design-fabricate workflow not only to solve the design problem, but also to provide an opportunity for people to participate in the workflow.
+In this way, our method would be applicable to other kinds of non-standard materials.
+Traditionally, in case of constructing public and symbolic buildings, such as church, people in a community took initiatives from fund raising to design, or even in construction process \cite{}. \todo{citation}
+% The humans-in-the-loop also enrich the connection between users and a building.
+% put emphasis on the forementioned qualities such as diverse solutions not only from the native diverse shapes but also from multiple solutions by people living and using the local community.
+% In modern architecture, user partricipation in design has been commonly explored for enhancing connection between the design and the context as a reaction against the generic buildings.
+
+%Historically, local natural stones and wavy trees have been commonly used to construct primitive huts and shelters \cite{weston2003materials}.
+% Over the years, each unique solution has been converged into a symbolic building style per community, described as "vernacular" in architecture
+
+
+In this paper, we report our experiment to design and fabricate an architectural element out of irregularly shaped branches with our workflow with humans-in-the-loop.
+We developed an online platform where users can post branches found at hand, and design with them through the game \textit{BranchConnect}.
+The game system itself helps users to design valid branch compositions and enable them to fabricate customized joineries to connect them together without screws and adhesives.
+Physically collected branches are digitally scanned and stored in a cloud database \textit{BranchCollect}, and offline application \textit{Branch Importer} analyzes shapes of branches and upload to the database.
+The simple visual feedback and scoring system of the game guide users to valid solutions, which are further inspected by an offline application \textit{G-Code Generator} for CNC milling process.
+The design of our joinery extends the traditional orthogonal lap-joints to various angles within a range, freeing the diverse shapes of woods from orthogonal connections.
+The game system and developed import/export applications are currently limited to branches, however, the principle of human-in-the-loop for designing with non-standard materials is applicable to any other non-standard materials.
+We hope our method sheds lights on materials such as waste from demolition of buildings for various design applications.
+
+% but selected  as well as fabricating differentiated joineries by a CNC router.
+% We propose an accessible design and fabrication platform, which allows multiple users to design with diverse irrefular forms of branches.
+
+
+Our contributions are summarized as follows.
+\begin{itemize}
+ \item{a workflow enabling to take non-standard materials as design components.}
+ \item{online participatory design system.} \todo{participatory is not really true...}
+ \item{an algorithm to generate customized non-orthogonal branch joints.}
+\end{itemize}
+
+
+
+% First of all, non-standard materials are considered to be expensive and less performative compared to standardized building materials.
+% For example, fabricating wooden joineries is considered to be an art due to the heterogeneous wooden structure and its precisions, resulting in higher cost than repetitive assembly of standard components \cite{seike1977art}.
+% In the context of fabrication, Pye \shortcite{pye1968nature} described such a skill as ``\textit{workmanship with risks}'', in contrast to ``\textit{workmanship with certainty}''.
+% Due to the complexity, these skills are not fully automated yet, thus we rely on skilled-workers to design and fabricate with these diverse materials.
+% Second of all, building design and construction became highly specialized professions.
+% Not only skills and knowledge, but also designers and architects must communicate with local municiparity to clear legal building codes.
+% Although participatory design has been common in architectural design process, the degree of participation is limited.
+% There is no such a platform to include local community to design and construction.
+
+% In this project, we put emphasis not only on sustainable, economical aspects of architecture, but also on cultural, communal aspects.
+% With the digital technology, we make the design process accessible for users by online browser game.
+% The approach is similar to participatory design process in architecture.
+% We believe that the use of non-standard materials provides an alternative design approach to modern architectural design.
+% As a prospect, we also aim to reveal implicit knowledge to handle such non-standard materials, which has been fostered in craftsmanship.
