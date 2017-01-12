@@ -1,35 +1,37 @@
 \section{Introduction}
 Modern buildings are characterized by its uniformity; built upon the same principle of construction system, consisting of standardized building component and its assembly process.
-The standardized construction system is characterized by its efficiency in design and production.
+The standardized construction system is favored because of its efficiency in design and production.
 Each component satisfies specified structural performance, enabling to integrate them and calculate the performance of the overall structure.
 On the other hand, excessive standardization converged buildings into similar materials and details, resulting in the detached design from built environment.
-Reacting on the issue, designers and architects actively use local materials not only as inspirational sources, but also as a catalyst of their design to the local context. \cite{oliver1997encyclopedia}.
+Reacting on the issue, designers and architects actively use local materials not only as inspirational sources, but also as a catalyst of their design to the local context \cite{oliver1997encyclopedia}.
 
 % As a result, we see similar-looking buildings all over the world.
 %The aesthetic quality of the combination of construction techniques to deal with building components is described as "techtonik".
 % Including management of construction, guidelines for maintenance to building materials and construction techniques, we call it as building starndard.
-
-Taking a look on traditional construction, or even fast back-warding to primitive shelters and huts, locally found resources were naturally used in these buildings.
-The idea of standard in buildings was not invented in the modern times but has been extensively applied as pyramids were built with standardized building blocks.
-The use of diverse non-standard materials can not compete with highly standardized materials and construction system, however, the uniqueness from their diverse shapes is the quality which standard materials can not serve.
+Since primitive shelters and huts, traditional construction has used locally found natural resources.
+% The idea of standard in buildings was not invented in the modern times but has been extensively applied as pyramids were built with standardized building blocks.
+Direct use of these materials can not compete with highly standardized materials and construction system, however, the uniqueness from their native shapes is a valuable quality which is lacking in standard materials.
 As the material is found locally, building and living get much closer, thus people using a facility can easily commit design and fabrication, fostering the sense of belonging to the community \cite{}. \todo{citation}
-Locally found material easily connects design and the context of built environment in this way, however, special skills are typically required to handle these materials, mainly due to the irregular properties.
+Locally found material easily connects design and the context of built environment in this way, but their irregular properties limit the use of them in modern buildings.
+Traditionally craftsmanship has taken care irregular natural materials varying their native shapes and dynamically design the global design by considering individual material properties \cite{}.
+Such a task is difficult to automate and relying on years of training, thus typically the use of native shapes costs more than standardized construction system. \\
 
-This paper aims to make the above-mentioned qualities of non-standard materials more accessible with digital technologies.
-We use locally found branches as non-standard resource found almost everywhere not only in country-side but also in urban environment such as parks and along streets.
+This paper aims to make the above-mentioned qualities of materials with native shapes more accessible by digital technologies.
+We use locally found branches as materials with native shapes, which can be found almost everywhere not only in country-side but also in urban environment such as parks and along streets.
 % According to the facility maintenance department in the University of Tokyo, the campus (540,000 $m^2$ at Hongo campus) annually produces 70-100 tons of branches by pruning.
-Most of these branches are annually pruned, and then chipped and burned with some cost.
+Public service takes care of these branches: annual pruning, storing, and chipping or burning with some costs.
 The size of branches (from 5 -30 cm in diameter) is too small for furniture or other structural applications.
-The diverse shape of branches provide adequate technical challenges in design and fabrication.
-Using high-precision but low-cost scanning devices and personal digital fabrication machines, even non-standard material properties can be analyzed and controlled.
+It is a challenge for digital design and fabrication to utilize the diverse branches in meaningful ways.
+High-precision but low-cost scanning devices and personal digital fabrication machines make it possible to analyze and control natural materials with diverse native shapes.
 
 The key technical difficulty with non-standard materials is design.
 Optimization is a straightforward approach: minimize an energy function which integrates structural and fabrication costs.
 This approach, however, is limited to particular design scenario with specific materials.
 Furthermore, the concept of optimum solution is well suited to goals such as efficiency or low-cost, but these goals are not the qualities non-standard materials can compete with standardized construction systems.
 Instead, we take humans in our scan-design-fabricate workflow not only to solve the design problem, but also to provide an opportunity for people to participate in the workflow.
-In this way, our method would be applicable to other kinds of non-standard materials.
 Traditionally, in case of constructing public and symbolic buildings, such as church, people in a community took initiatives from fund raising to design, or even in construction process \cite{}. \todo{citation}
+% In this way, our method would be applicable to other kinds of materials with diverse shapes.
+
 % The humans-in-the-loop also enrich the connection between users and a building.
 % put emphasis on the forementioned qualities such as diverse solutions not only from the native diverse shapes but also from multiple solutions by people living and using the local community.
 % In modern architecture, user partricipation in design has been commonly explored for enhancing connection between the design and the context as a reaction against the generic buildings.
@@ -38,13 +40,13 @@ Traditionally, in case of constructing public and symbolic buildings, such as ch
 % Over the years, each unique solution has been converged into a symbolic building style per community, described as "vernacular" in architecture
 
 
-In this paper, we report our experiment to design and fabricate an architectural element out of irregularly shaped branches with our workflow with humans-in-the-loop.
+In this paper, we report our case study to design and fabricate an architectural element out of irregularly shaped branches, using our humans-in-the-loop system.
 We developed an online platform where users can post branches found at hand, and design with them through the game \textit{BranchConnect}.
 The game system itself helps users to design valid branch compositions and enable them to fabricate customized joineries to connect them together without screws and adhesives.
+The design of our joinery extends the traditional orthogonal lap-joints to various angles within a range, freeing the diverse shapes of woods from orthogonal connections.
 Physically collected branches are digitally scanned and stored in a cloud database \textit{BranchCollect}, and offline application \textit{Branch Importer} analyzes shapes of branches and upload to the database.
 The simple visual feedback and scoring system of the game guide users to valid solutions, which are further inspected by an offline application \textit{G-Code Generator} for CNC milling process.
-The design of our joinery extends the traditional orthogonal lap-joints to various angles within a range, freeing the diverse shapes of woods from orthogonal connections.
-The game system and developed import/export applications are currently limited to branches, however, the principle of human-in-the-loop for designing with non-standard materials is applicable to any other non-standard materials.
+The game system and developed import/export applications are currently limited to branches, however, the principle of human-in-the-loop for design is applicable for other kinds of materials with diverse irregular shapes.
 We hope our method sheds lights on materials such as waste from demolition of buildings for various design applications.
 
 % but selected  as well as fabricating differentiated joineries by a CNC router.
@@ -53,9 +55,9 @@ We hope our method sheds lights on materials such as waste from demolition of bu
 
 Our contributions are summarized as follows.
 \begin{itemize}
- \item{a workflow enabling to take non-standard materials as design components.}
+ \item{a workflow enabling to take natural materials with native shapes as design components.}
  \item{online platform to collect irregularly shaped materials and serving them to an online game as a design driver.}
- \item{an algorithm generating customized non-orthogonal joineries.}
+ \item{fast and robust intersection detection algorithm for fabricating customized non-orthogonal joineries.}
 \end{itemize}
 
 
