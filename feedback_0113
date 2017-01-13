@@ -1,0 +1,60 @@
+L169
+Workflow
+
+基本的な流れをまず説明すべきと思います。
+1) 枝を集める
+2) 板に固定してスキャンする
+3) ブラウザ上でデザイン（設計）する
+4) 組み立てる
+
+
+L180
+Brunch Importer,
+->
+Brunch Importer
+
+integrates
+->
+provides
+
+L183
+from a plate
+->
+[説明がないと唐突]
+例
+The scanned result is a point cloud representing branch geometry fixed on the base plate. The system first identifies branches by applying simple height threshold. The system applies contour detection
+(we currently use findcontour in OpenCV).
+
+L196
+within a threshold bound...
+->
+良くわかりません。
+曲がってたら分割するということでしょうか？
+分岐があったら（Y字だったら）分割ではないのでしょうか？
+
+L198
+Most branches..
+->
+most? それ以外は？
+
+L202
+この段落で Figure 3 が参照されてない。
+
+L205
+sounding
+->
+sound
+
+L203
+ブラウザで動く、ネット越しでもできる、
+大勢で同時にできる、
+といったことをまず明記してください。
+
+L317 4. Experiment
+->
+4. Case Study
+
+L319
+validity
+->
+feasibility
