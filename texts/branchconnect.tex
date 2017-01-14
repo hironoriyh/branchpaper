@@ -1,7 +1,12 @@
 \section{Workflow}
-The overall workflow is  Figure \ref{fig:teaser}
-
-In this section, we shortly walk through the pipeline in our workflow and describe three steps: Digital Model Acquisition, the Game System, and Fabrication. Our system takes textured mesh model or point cloud with colored vertices. As complete mesh model provides more robust result with 3D shapes of branches, we describe our process based on mesh model as input (see Figure \ref{fig:pipeline} ).
+As illustrated in the left of Figure \ref{fig:teaser}, our workflow starts from physically collecting branches.
+The collected branches are uploaded to cloud database by \textit{Branch Importer}, and served to online game-based design application \textit{BranchConnect}.
+The game is working on browsers and accessible from laptop computers and mobile devices.
+As in the right of \ref{fig:teaser}, users can explore a global design with multiple branch layouts.
+Once the global design is fixed, designed layouts are further inspected by \textit{G-Code Generator}, which generates customized joineries for CNC milling.
+After finishing the milling process, users physically assemble branches and complete the fabrication process.
+The pipeline of the workflow is illustrated in the Figure \ref{fig:pipeline}.
+In this section, we describe three steps in the pipeline: Digital Model Acquisition, the Game System, and Fabrication.
 
 \begin{figure}[ht]
   \begin{center}
@@ -12,9 +17,12 @@ In this section, we shortly walk through the pipeline in our workflow and descri
 \end{figure}
 
 \subsection{Digital Model Acquisition}
-There are various methods and software available for scanning 3D models and detecting objects.
-As for the scanning, we describe in the Experiment.
-Taking mesh model with colored texture, our \textit{Branch Importer}, integrates necessary functions such as object detection, skeleton extraction, branch type classification, and fixture location detection.
+Our system takes textured mesh model or point cloud with colored vertices.
+As complete mesh model provides more robust result with 3D shapes of branches, we describe our process based on mesh model as an input.
+
+There are various methods and software available for scanning 3D models.
+As for hardware setup, we describe in the Section \ref{sec:casestudy}.
+Taking mesh model with colored texture, our \textit{Branch Importer}, integrates functions such as object detection, skeleton extraction, branch type classification, and fixture point setting.
 
 % The acquired model is segmented from the attached plate by a height threshold value.
 

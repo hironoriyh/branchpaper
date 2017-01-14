@@ -1,0 +1,31 @@
+introduce the global design
+	taking branches as our materials, our goal is to design and fabricate a fence with preserving the native branch forms.
+	
+0:25	With our online platform, we make building with local natural materials 
+more accessible playful and feasible.
+
+0:32 	After collecting branches, they ar ecut in lengths and attached on plates with 0.5x0.5m
+
+0:39	each plate is scanned and a mesh model is aquired.
+	the scanned model ...
+
+0:42	the online game downloads the stored data.
+	users can contribute to the fence design. 
+
+0:50 	the submitted layout is available for CNC milling process.
+
+1:12 	user can click the fixture points to set them as invalid points. 
+
+1:24	a user with id selects a target..
+	they can see layouts by others
+
+1:37	the user selects a plate among the uploaded branch plates
+
+2:39	our joinery only takes a pair of branch one of which is flipped.
+	This constraint is reflected in the game. 
+
+
+
+
+
+
