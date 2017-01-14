@@ -18,47 +18,46 @@ In this section, we describe three steps in the pipeline: Digital Model Acquisit
 
 \subsection{Digital Model Acquisition}
 Our system takes textured mesh model or point cloud with colored vertices.
-As complete mesh model provides more robust result with 3D shapes of branches, we describe our process based on mesh model as an input.
-
+As complete mesh model provides more robust results with 3D shapes of branches, we describe our process based on mesh model as an input.
 There are various methods and software available for scanning 3D models.
-As for hardware setup, we describe in the Section \ref{sec:casestudy}.
-Taking mesh model with colored texture, our \textit{Branch Importer}, integrates functions such as object detection, skeleton extraction, branch type classification, and fixture point setting.
+As for scanning setup, we describe in the Section \ref{sec:casestudy}.
+Taking mesh model with colored texture, our \textit{Branch Importer} provides functions such as object detection, skeleton extraction, branch type classification, and fixture point setting.
 
-% The acquired model is segmented from the attached plate by a height threshold value.
-
-After segmenting branches from a plate by height threshold, each branch is detected using \textit{findContour} in OpenCV \footnote{Open Source Computer Vision Library. See \url{http://opencv.org/} }.
+The scanned result is a mesh model representing branches with a fixed plate.
+The system first idendifies branches by applying simple height threshold, and then applies contour detection (we currently use \textit{findContour} in OpenCV \footnote{Open Source Computer Vision Library: \url{http://opencv.org/} }).
 The obtained 2D contours are used for extracting skeletons and clustering point cloud in the mesh model.
 Contours are triangulated and skeleton points are extracted from middle points on edges of triangles.
-These middle points are compared with binary top view image of the mesh model (contours are filled with different colors and the background is white).
+These middle points are compared with top view image from OpenCV.
 If the point is inside of a contour, the middle point is counted in skeleton points.
-Metal fixture locations are also filtered out due as they have bright reflections on original images, however, we also double check with simple mouse-clicks to ensure these invalid points.
-After extracting valid middle points, connectivity of skeletons is analyzed by angle of three adjacent skeleton points.
-If the angle stays within a threshold bound, a point is counted in a sub-branch, otherwise, new sub-branch is created.
-Evaluating the number of sub-branches, the branch is morphologically classified.
-Most branches are categoraized in three shapes:  $I, V, and Y$ shapes.
-$I$ shape has a straight continuous polyline, $V$ has an inflection point, and $Y$ has a splitting point.
+After extracting valid middle points, the connectivity of skeletons is analyzed. In case grafting is detected, a new branch is added. 
+The result is shown in Figure ~\ref{fig:skeleton}.
+%Evaluating the number of sub-branches, the branch is morphologically classified.
+Metal fixture locations are confirmed by simple mouse-clicks and set as invalid points.
 The acquired information is stored in a cloud database.
 
 \begin{figure}[ht]
   \includegraphics[width = 0.4\paperwidth]{images/importer/importer.png}
-  \caption{An overview of \textit{Branch Importer}. Left: a top ortho-view image of textured mesh model. Right: Extracted skeletons (blue dots). The beginning of skeletons is shown bigger dots. Red dots are invalid points. }
+  \caption{An interface of \textit{Branch Importer}. Left: a top ortho-view image of textured mesh model. Right: Extracted skeletons are shown with blue dots. The beginning of skeletons is shown bigger dots, and the red dots are invalid points defined by a user. }
   \label{fig:skeleton}
 \end{figure}
 
 
-
-
 \subsection{BranchConnect: The Game}
-The game objective is to collect valid compositions of branches which structurally sounding and possible to fabricate with ordinal 3 axis CNC milling machines.
-The workflow of the game is illustrated in Figure~\ref{fig:game_flowchart}
+The online game is accessible by laptops and mobile touch devices, and many users can play at the same time.
+The objective of the game is to collect valid layouts of branches which are fabricatable with 3 axis CNC milling machines.
+By analyzing the connectivity of branches and target points, the game checks structural feasibility of a given layout. 
+The guidance system during furniture design inspected connectivity, durability, and stability \cite{umetani2012guided}. 
+Unlike their work, the game focuses on fabricatability with minimum consideration of gemetric connectivity due to the limited computational resources in mobile devices. 
 
-\begin{figure}[ht]
-  \begin{center}
-    \includegraphics[width = 0.25\paperwidth]{images/system/systemFlowChart.pdf}
-    \caption{The workflow of \textit{BranchConnect}. Branch data and user design data are stored on cloud database.}
-    \label{fig:game_flowchart}
-  \end{center}
-\end{figure}
+
+%The workflow of the game is illustrated in Figure~\ref{fig:game_flowchart}.
+%\begin{figure}[ht]
+%  \begin{center}
+%    \includegraphics[width = 0.25\paperwidth]{images/system/systemFlowChart.pdf}
+%    \caption{The workflow of \textit{BranchConnect}. Branch data and user design data are stored on cloud database.}
+%    \label{fig:game_flowchart}
+%  \end{center}
+%\end{figure}
 
 Firstly a user selects a frame indicating multiple target points to be connected, and then selects a set of branches fixed on a plate (The left in Figure \ref{fig:game_interface} ).
 After selecting the target frame and the set of branches, the user is guided to the game interface, consisting of the frame with the target points, and the set of available branches (The right in Figure \ref{fig:game_interface} ).
@@ -66,9 +65,8 @@ The user picks a branch from the available set on the bottom, and then places it
 The number of available branches differs depending on plates.
 With the feasible diameter of branches (over 2cm) and the plate size (50cm x 50cm), the number of available branches is most likely up to six.
 Within the limited number of branches, the user bridges all the target points by connecting all the used branches in one group.
-The game is completed when all the target points are connected by branches.
-For higher score, the user can modify the design after the completion.
-After completing the modification, the design is submitted and sent to \textit{G-Code Generator}.
+The game is completed when all the target points are connected.
+For higher score, the user can modify the design after the completion, and save it to the database.
 
 \begin{figure}[H]
   \begin{center}
@@ -84,8 +82,8 @@ Also most branches come with free-form concave shapes, thus further geometric pr
 For fast and robust intersection detection, our system extensively uses skeletons of branches.
 Hubbard and Philip developed collision detection by representing object with hierarchical 3D spheres aligned on skeletons \cite{Hubbard:1996:APS:231731.231732}.
 Our system takes similar approach but more limited in 2D and intersection detection only.
-In broader phase, simplified skeletons are used to find the pair of closest skeleton points between two branches.
-After finding the pair, skeletons with higher resolutions are used.
+In the game, simplified skeletons are used to find the pair of closest skeleton points between two branches.
+More precise joint calculation with higher resolution is further described in the next section.
 
 A joint is created when an intersecting pair is detected, and the pair forms a group.
 The group is used for evaluating connections between target points.
@@ -236,7 +234,7 @@ The center cuts are paths that are plaining the top surface of the joint.
 \begin{figure}[ht]
   \begin{center}
     \includegraphics[width = 0.4\paperwidth]{images/system/joint_milling_diagram_4.png}
-    \caption{An example of intersected pair: 1. an assembled pair of branches. 2. branches after the center and side cuts are milled 3. left: a composition defined by a user right: the original orientations of branches with generated milling paths with red color.  }
+    \caption{An example of intersected pair: 1. an assembled pair of branches. 2. branches after the center and side cuts are milled 3. left: a layout defined by a user right: the original orientations of branches with generated milling paths with red color.  }
     \label{fig:joint_geometry}
   \end{center}
 \end{figure}
