@@ -35,7 +35,7 @@ For higher score, the user can modify the design after the completion, and save 
   \end{center}
 \end{figure}
 %
-\subsection{System Overview}
+\subsection{Overview}
 There are many collision detection libraries available, however, our game needs to detect intersected branch pairs, thus surface contact detection is overkill for our application.
 Also most branches come with free-form concave shapes, thus further geometric preparation such as convex decomposition is necessary for using these libraries.
 For fast and robust intersection detection, our system extensively uses down-sampled skeletons of branches.
@@ -57,27 +57,25 @@ Together with the color-code, the score update guides the user to form a valid d
 \subsection{Joint Condition}
 \label{sec:joint}
 Joint is the essential entity not only in the game but also in the fabrication process of customized lapped joineries.
-
 Importantly, each pair of branches must have one flipped branch for fabrication constraint.
 We describe this further in a later section (see Section \ref{sec:fabrication}).
-
 Figure~\ref{fig:joint_condition} illustrates valid and invalid joint conditions.
-
 Our joint only takes crossed pair (see Figure~\ref{fig:joint_condition}.1) because they are structurally stable, relatively simple to fabricate, and creates diverse designs.
 Tangential connections are counted as invalid as fabrication of tangential joinery is challenging with small branches (see Figure~\ref{fig:joint_condition}.3).
+A valid joint's angle stays within a fixed range (see Figure~\ref{fig:joint_condition}.1 and 2).
+Joints close to metal fixtures are also counted as invalid (see Figure~\ref{fig:joint_condition}.4).
+Valid and invalid joints are displayed with green and red respectively.
 
 \begin{figure}[ht]
 	\begin{center}
 		\includegraphics[width = 0.4\paperwidth]{images/system/joint_conditions_2.png}
-		\caption{Joint conditions. 1.valid joint. 2.invalid for violating the angle. 3.invalid tangential connection. 4.invalid for connecting on a fixture point. }
+		\caption{Joint conditions. 1. valid joint. 2. invalid for violating the angle. 3. invalid tangential connection. 4. invalid for connecting on a fixture point. }
 		\label{fig:joint_condition}
 	\end{center}
 \end{figure}
 
 
-A valid joint's angle stays within a fixed range (see Figure~\ref{fig:joint_condition}.1 and 2).
-Joints close to metal fixtures are also counted as invalid (see Figure~\ref{fig:joint_condition}.4).
-Valid and invalid joints are displayed with green and red respectively.
+
 
 To describe the process, we let $\mathcal{B}$ denotes a set of all the available branches, and each branch as $ b_i \in \mathcal{B}$.
 While the process checks joint condition through all the branches $\mathcal{B}$, each detected joint is stored in each branch $b_i$, categorized in different conditions such as valid and invalid joints denoted as $j_{\text{valid}, j, i} \in \mathcal{J}_{\text{valid},i}$ and $j_{\text{invalid}, j, i} \in \mathcal{J}_{\text{invalid},i}$ respectively.
@@ -120,7 +118,7 @@ When a group bridges a pair of target points, a special score is added and displ
 The branch connected to the target point is trimmed at the target point, and the trimmed length is subtracted from the score.
 %The other paired branch $b_{\text{paired},i}$ stored in $j_{\text{valid}, j}$ is used for tracing the connection with other paired branch in each valid joint $j_i$. \todo{incomplete sentence!}
 The game is completed when the number of $\mathcal{G}$ is one, and all the target points are connected with the group.
-The algorithm which checks group conditions is described in \ref{al:connection}.
+The algorithm which checks group conditions is described in Algorithm \ref{al:connection}.
 
 \begin{algorithm}
   \caption{Group Condition Update Algorithm}
@@ -168,7 +166,7 @@ The algorithm which checks group conditions is described in \ref{al:connection}.
 In the score calculation processes, follwoing entities forms the score: the numbers of valid and invalid joints on each branch, the number of groups as $N(\mathcal{G} )$, the number of islanded groups as $N(g_{\text{islanded}} \in \mathcal{G} )$, the number of bridged target points as $N(t_{\text{bridged}, i}) \in \mathcal{T} )$.
 The trimmed lengths of branches which are connected with target points are denoted as $trimmed(t_j, b_i)$
 The score is weighted sum of these joint and group conditions, denoted in Equation (\ref{eq:cost}).
-The weights 'w1...w5' are non-negative weight coefficients pre-adjusted in advance by authors.
+The weights $w_1 \dotso  w_5$ are non-negative weight coefficients pre-adjusted in advance by authors.
 
 
 \begin{equation} \label{eq:cost}

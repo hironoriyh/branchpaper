@@ -25,10 +25,10 @@ As for scanning setup, we describe in the Section \ref{sec:casestudy}.
 Taking mesh model with colored texture, our \textit{Branch Importer} provides functions such as object detection, skeleton extraction, branch type classification, and fixture point setting.
 
 The scanned result is a mesh model representing branches with a fixed plate.
-The system first idendifies branches by applying simple height threshold, and then applies contour detection (we currently use \textit{findContour} in OpenCV \footnote{Open Source Computer Vision Library: \url{http://opencv.org/} }).
+The system first idendifies branches by applying simple height threshold, and then applies contour detection.
 The obtained 2D contours are used for extracting skeletons and clustering point cloud in the mesh model.
 Contours are triangulated and skeleton points are extracted from middle points on edges of triangles.
-These middle points are compared with top view image from OpenCV.
+These middle points are compared with top view image.
 If the point is inside of a contour, the middle point is counted as a valid point.
 After extracting valid middle points, the connectivity of skeletons is analyzed.
 In case grafting branch is detected, a new skeleton sub-branch is added.
@@ -61,13 +61,13 @@ The geometry creates rigid joints with irregularly shaped sections of branches.\
 \begin{figure}[ht]
   \begin{center}
     \includegraphics[width = 0.4\paperwidth]{images/system/joint_generator_2.png}
-    \caption{Interface of \textit{G-Code Generator}. Left: a layout defined by a user. The calculated joineries are displayed. Right: an original orientation of a scanned plate with joineries. }
+    \caption{Interface of \textit{G-Code Generator}. Left: a layout defined by a user with joineries. Right: an original orientation of a scanned plate with joineries. }
     \label{fig:gcode_gen}
   \end{center}
 \end{figure}
 
-Similar to the joint searching process with skeletons, the \textit{G-Code Generator} searches a set of four closest points from high-resolution contours, expecting that every intersected contour has four curves.
-After finding the four closest points, it trims two curves from each contour of branch. (two from intersecting branch and two from intersected branch) at each joint.
+Similar to the joint searching process with skeletons (see Section \ref{sec:joint}), the \textit{G-Code Generator} searches a set of four closest points from high-resolution contours, expecting that every intersected contour has four curves.
+After finding the four closest points, it trims two curves from each contour of branch. 
 The trimmed contours are transformed to the original scanned orientation and used for generating milling paths.
 Two curves from an intersected branch are used for generating side cuts milling paths, which are inwardly offset paths of the original branch contours.
 Height of center cuts is half of branch diameter.
@@ -78,7 +78,7 @@ In case of uder-cuts, the system detects different values and adjust the center 
 \begin{figure}[H]
   \begin{center}
     \includegraphics[width = 0.4\paperwidth]{images/system/joint_milling_diagram_4.png}
-    \caption{An example of intersected pair: 1. an assembled pair of branches. 2. branches after the center and side cuts are milled 3. left: a layout defined by a user right: the original orientations of branches with generated milling paths with red color.  }
+    \caption{An example of intersected pair of branches: 1. left: a layout defined by a user right: the original orientations of branches with generated milling paths with red color. 2. an assembled pair of branches. 3. branches after the center and side cuts are milled   }
     \label{fig:joint_geometry}
   \end{center}
 \end{figure}
