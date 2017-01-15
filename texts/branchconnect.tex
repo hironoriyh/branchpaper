@@ -2,11 +2,11 @@
 \label{sec:game}
 The online game is accessible by laptops and mobile touch devices, and many users can play at the same time.
 The objective of the game is to collect valid layouts of branches which are fabricatable with 3 axis CNC milling machines.
-By analyzing the connectivity of branches and target points, the game checks structural feasibility of a given layout.
-Similar to our game, the guidance system during furniture design inspected connectivity, durability, and stability \cite{umetani2012guided}.
-Unlike their work, our game puts emphasis on \textit{fabricatability}, as well as geometric \textit{connectivity}, and does not calculate structural performance of each joint.
-Instead, we restrict valid layout space by limiting valid joint and conditions.
-We also assume that every fabricated joint works as a rigid joint, thus single connection is stable to hold a pair of branches.
+By analyzing the connectivity of branches and target points, the game checks feasibility of a given layout.
+Similar to our game, the work \textit{guidance system during furniture design} inspected connectivity, durability, and stability \cite{umetani2012guided}.
+Unlike their work, our game puts emphasis on \textit{fabricatability}, as well as \textit{geometric connectivity}, and does not calculate structural performance of each joint.
+Instead, we limit valid layout space by selected joint conditions, and group conditions.
+We also assume that every fabricated joint works as a rigid joint, thus single connection is counted as stable to hold a pair of branches.
 
 
 %The workflow of the game is illustrated in Figure~\ref{fig:game_flowchart}.
@@ -38,9 +38,9 @@ For higher score, the user can modify the design after the completion, and save 
 \subsection{System Overview}
 There are many collision detection libraries available, however, our game needs to detect intersected branch pairs, thus surface contact detection is overkill for our application.
 Also most branches come with free-form concave shapes, thus further geometric preparation such as convex decomposition is necessary for using these libraries.
-For fast and robust intersection detection, our system extensively uses skeletons of branches.
+For fast and robust intersection detection, our system extensively uses down-sampled skeletons of branches.
 
-Hubbard and Philip developed collision detection by representing object with hierarchical 3D spheres aligned on skeletons \cite{Hubbard:1996:APS:231731.231732}.
+Hubbard and Philip developed collision detection by representing an object with hierarchical 3D spheres aligned on a skeleton \cite{Hubbard:1996:APS:231731.231732}.
 Our system takes similar approach but limited in 2D, but more focused on searching fabricatable joints.
 In the game, simplified skeletons are used to find the pair of closest skeleton points between two branches.
 When a branch is selected, it is counted as an active, and the system searches the closest skeleton point from skeletons of other branches.
