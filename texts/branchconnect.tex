@@ -1,54 +1,12 @@
-\section{Workflow}
-As illustrated in the left of Figure \ref{fig:teaser}, our workflow starts from physically collecting branches.
-The collected branches are uploaded to cloud database by \textit{Branch Importer}, and served to online game-based design application \textit{BranchConnect}.
-The game is working on browsers and accessible from laptop computers and mobile devices.
-As in the right of \ref{fig:teaser}, users can explore a global design with multiple branch layouts.
-Once the global design is fixed, designed layouts are further inspected by \textit{G-Code Generator}, which generates customized joineries for CNC milling.
-After finishing the milling process, users physically assemble branches and complete the fabrication process.
-The pipeline of the workflow is illustrated in the Figure \ref{fig:pipeline}.
-In this section, we describe three steps in the pipeline: Digital Model Acquisition, the Game System, and Fabrication.
-
-\begin{figure}[ht]
-  \begin{center}
-    \includegraphics[width = 0.4\paperwidth]{images/workflow/pipeline.png}
-    \caption{A pipeline from model acquisition to fabrication.}
-    \label{fig:pipeline}
-  \end{center}
-\end{figure}
-
-\subsection{Digital Model Acquisition}
-Our system takes textured mesh model or point cloud with colored vertices.
-As complete mesh model provides more robust results with 3D shapes of branches, we describe our process based on mesh model as an input.
-There are various methods and software available for scanning 3D models.
-As for scanning setup, we describe in the Section \ref{sec:casestudy}.
-Taking mesh model with colored texture, our \textit{Branch Importer} provides functions such as object detection, skeleton extraction, branch type classification, and fixture point setting.
-
-The scanned result is a mesh model representing branches with a fixed plate.
-The system first idendifies branches by applying simple height threshold, and then applies contour detection (we currently use \textit{findContour} in OpenCV \footnote{Open Source Computer Vision Library: \url{http://opencv.org/} }).
-The obtained 2D contours are used for extracting skeletons and clustering point cloud in the mesh model.
-Contours are triangulated and skeleton points are extracted from middle points on edges of triangles.
-These middle points are compared with top view image from OpenCV.
-If the point is inside of a contour, the middle point is counted as a valid point.
-After extracting valid middle points, the connectivity of skeletons is analyzed. 
-In case grafting branch is detected, a new skeleton sub-branch is added. 
-The result is shown in Figure ~\ref{fig:skeleton}.
-%Evaluating the number of sub-branches, the branch is morphologically classified.
-Metal fixture locations are confirmed by simple mouse-clicks and set as invalid points.
-The acquired information is stored in a cloud database.
-
-\begin{figure}[ht]
-  \includegraphics[width = 0.4\paperwidth]{images/importer/importer.png}
-  \caption{An interface of \textit{Branch Importer}. Left: a top ortho-view image of textured mesh model. Right: Extracted skeletons are shown with blue dots. The beginning of skeletons is shown bigger dots, and the red dots are invalid points defined by a user. }
-  \label{fig:skeleton}
-\end{figure}
-
-
-\subsection{BranchConnect: The Game}
+\section{BranchConnect: The Game}
+\label{sec:game}
 The online game is accessible by laptops and mobile touch devices, and many users can play at the same time.
 The objective of the game is to collect valid layouts of branches which are fabricatable with 3 axis CNC milling machines.
-By analyzing the connectivity of branches and target points, the game checks structural feasibility of a given layout. 
-The guidance system during furniture design inspected connectivity, durability, and stability \cite{umetani2012guided}. 
-Unlike their work, our game focuses on fabricatability with minimum consideration of gemetric connectivity due to the limited resources with mobile devices.
+By analyzing the connectivity of branches and target points, the game checks structural feasibility of a given layout.
+Similar to our game, the guidance system during furniture design inspected connectivity, durability, and stability \cite{umetani2012guided}.
+Unlike their work, our game puts emphasis on \textit{fabricatability}, as well as geometric \textit{connectivity}, and does not calculate structural performance of each joint.
+Instead, we restrict valid layout space by limiting valid joint and conditions.
+We also assume that every fabricated joint works as a rigid joint, thus single connection is stable to hold a pair of branches.
 
 
 %The workflow of the game is illustrated in Figure~\ref{fig:game_flowchart}.
@@ -60,9 +18,9 @@ Unlike their work, our game focuses on fabricatability with minimum consideratio
 %  \end{center}
 %\end{figure}
 
-Firstly a user selects a frame indicating multiple target points to be connected, and then selects a set of branches fixed on a plate (The left in Figure \ref{fig:game_interface} ).
-After selecting the target frame and the set of branches, the user is guided to the game interface, consisting of the frame with the target points, and the set of available branches (The right in Figure \ref{fig:game_interface} ).
-The user picks a branch from the available set on the bottom, and then places it in an arbitrary 2D pose through basic manipulations such as move, rotate, and mirror.
+Firstly a user selects a frame indicating multiple target points to be connected, and then selects a set of branches fixed on a plate (The left in Figure \ref{fig:game_interface}).
+After selecting the target frame and the set of branches, the user is guided to the game interface, consisting of the frame with the target points, and the set of available branches (The right in Figure \ref{fig:game_interface}).
+The user picks a branch from the available set on the bottom, and then places it in an arbitrary 2D pose through basic manipulations such as move, rotate, and flip.
 The number of available branches differs depending on plates.
 With the feasible diameter of branches (over 2cm) and the plate size (50cm x 50cm), the number of available branches is most likely up to six.
 Within the limited number of branches, the user bridges all the target points by connecting all the used branches in one group.
@@ -77,7 +35,7 @@ For higher score, the user can modify the design after the completion, and save 
   \end{center}
 \end{figure}
 %
-\subsubsection*{System Overview}
+\subsection{System Overview}
 There are many collision detection libraries available, however, our game needs to detect intersected branch pairs, thus surface contact detection is overkill for our application.
 Also most branches come with free-form concave shapes, thus further geometric preparation such as convex decomposition is necessary for using these libraries.
 For fast and robust intersection detection, our system extensively uses skeletons of branches.
@@ -96,11 +54,16 @@ Once the user finishes positioning, score is updated with weighted sum of parame
 Together with the color-code, the score update guides the user to form a valid design.
 
 
-\subsubsection*{Joint Condition}
+\subsection{Joint Condition}
+\label{sec:joint}
 Joint is the essential entity not only in the game but also in the fabrication process of customized lapped joineries.
-Each fabricated joint works as a rigid joint, and we do not calculate structural performance of each joint.
+
+Importantly, each pair of branches must have one flipped branch for fabrication constraint.
+We describe this further in a later section (see Section \ref{sec:fabrication}).
+
 Figure~\ref{fig:joint_condition} illustrates valid and invalid joint conditions.
-Our joint only takes crossed pair (see Figure~\ref{fig:joint_condition}.1) because they are structurally stable, relatively simple to fabricate, and creates diverse designs. 
+
+Our joint only takes crossed pair (see Figure~\ref{fig:joint_condition}.1) because they are structurally stable, relatively simple to fabricate, and creates diverse designs.
 Tangential connections are counted as invalid as fabrication of tangential joinery is challenging with small branches (see Figure~\ref{fig:joint_condition}.3).
 
 \begin{figure}[ht]
@@ -112,11 +75,9 @@ Tangential connections are counted as invalid as fabrication of tangential joine
 \end{figure}
 
 
-A valid joint's angle stays within a fixed range (see Figure~\ref{fig:joint_condition}.1 and 2). 
+A valid joint's angle stays within a fixed range (see Figure~\ref{fig:joint_condition}.1 and 2).
 Joints close to metal fixtures are also counted as invalid (see Figure~\ref{fig:joint_condition}.4).
 Valid and invalid joints are displayed with green and red respectively.
-When a branch is connected to a target point, the specially added score is deisplayed in a pop-up square, also the graphics of target point's and the branch are changed.
-The branch is trimmed at the connection point with the target point, and the trimmed length is subtracted from the score.
 
 To describe the process, we let $\mathcal{B}$ denotes a set of all the available branches, and each branch as $ b_i \in \mathcal{B}$.
 While the process checks joint condition through all the branches $\mathcal{B}$, each detected joint is stored in each branch $b_i$, categorized in different conditions such as valid and invalid joints denoted as $j_{\text{valid}, j, i} \in \mathcal{J}_{\text{valid},i}$ and $j_{\text{invalid}, j, i} \in \mathcal{J}_{\text{invalid},i}$ respectively.
@@ -137,7 +98,7 @@ A flowchart of the game system with joint and group conditions is illustrated in
 
 
 
-\subsubsection*{Group Condition}
+\subsection{Group Condition}
 
 After checking joint conditions of all the pairs of branches, the system checks the number of groups as well as its connection with the target points on a frame.
 If a group is not connected to any target point nor other groups, the group is \textit{Islanded} and structurally invalid.
@@ -154,9 +115,12 @@ While a user is positioning a branch by dragging or rotating, groups are continu
 
 After all the joint conditions are checked, we evaluate group conditions.
 Through checking the all the branches $\mathcal{B}$, the first group $g_0$ is created and stored as $b_0$.
+When a branch is connected to a target point, the graphics of the point changes, and the branch and its belonging group's color also changes.
+When a group bridges a pair of target points, a special score is added and displayed in a pop-up square, also the graphics of target point's changes.
+The branch connected to the target point is trimmed at the target point, and the trimmed length is subtracted from the score.
 %The other paired branch $b_{\text{paired},i}$ stored in $j_{\text{valid}, j}$ is used for tracing the connection with other paired branch in each valid joint $j_i$. \todo{incomplete sentence!}
 The game is completed when the number of $\mathcal{G}$ is one, and all the target points are connected with the group.
-The algorithm chekcing group conditions is described in \ref{al:connection}.
+The algorithm which checks group conditions is described in \ref{al:connection}.
 
 \begin{algorithm}
   \caption{Group Condition Update Algorithm}
@@ -200,60 +164,21 @@ The algorithm chekcing group conditions is described in \ref{al:connection}.
   \label{al:connection}
 \end{algorithm}
 
-\subsubsection*{Score Calculation}
+\subsection{Score Calculation}
 In the score calculation processes, follwoing entities forms the score: the numbers of valid and invalid joints on each branch, the number of groups as $N(\mathcal{G} )$, the number of islanded groups as $N(g_{\text{islanded}} \in \mathcal{G} )$, the number of bridged target points as $N(t_{\text{bridged}, i}) \in \mathcal{T} )$.
 The trimmed lengths of branches which are connected with target points are denoted as $trimmed(t_j, b_i)$
 The score is weighted sum of these joint and group conditions, denoted in Equation (\ref{eq:cost}).
 The weights 'w1...w5' are non-negative weight coefficients pre-adjusted in advance by authors.
 
 
-
-
 \begin{equation} \label{eq:cost}
  \begin{aligned}
- Score =  &\; w_1  \sum_{1}^{N(\mathcal{B})} \sum_{1}^{N(\mathcal{J}_{\text{valid},i})} j_{\text{valid}, j, i} 
+ Score =  &\; w_1  \sum_{1}^{N(\mathcal{B})} \sum_{1}^{N(\mathcal{J}_{\text{valid},i})} j_{\text{valid}, j, i}
 	& + \; &w_2  \sum_{1}^{N(\mathcal{B})} \sum_{1}^{N(\mathcal{J}_{\text{invalid},i})} j_{\text{invalid}, j, i}\\
 + &\; w_3  \sum_{1}^{N(\mathcal{G})} g_{\text{islanded}} \;
 	& + \; &w_4  \sum_{1}^{N(\mathcal{T})} t_{\text{bridged}} \; \\
 + &\; w_5 \sum_{1}^{N(\mathcal{T})} trimmed(t_j, b_i)
  \\
-   \textrm{s.t.} \; w_j  \geq  &\;0 \; \forall j \in 1, \dotsc , 5 
+   \textrm{s.t.} \; w_j  \geq  &\;0 \; \forall j \in 1, \dotsc , 5
  \end{aligned}
 \end{equation}
-
-\subsection{Fabrication}
-After a design is selected for fabrication, the validity of the design is further inspected with a high-resolution model.
-The \textit{G-Code Generator} was developed for fine-tuning the design by checking real-time feedback of updated joineries on branches with scanned orientations (see Figure \ref{fig:gcode_gen}).
-Users can change fabrication parameters such as offset ratio for the side cuts, milling bit diameter, overlapping ratio for defining the center cut depth, feed-rate, moving height and so forth.
-After confirming the fabrication settings and milling paths, it generates G-Code.
-
-\begin{figure}[ht]
-  \begin{center}
-    \includegraphics[width = 0.4\paperwidth]{images/system/joint_generator_2.png}
-    \caption{Interface of \textit{G-Code Generator}. Users can tweak the design on the left side and immediately see the updated joints and milling paths on the right. }
-    \label{fig:gcode_gen}
-  \end{center}
-\end{figure}
-
-Some fabrication factors such as mirror and invalid points are already considered by \textit{Branch Importer} and the game system.
-In this section, we describe the process of joinery generation.
-Each joinery geometry is parametrically modeled with: two plane surfaces on the sides of branches and one plane top surface (see Figure \ref{fig:joint_geometry}).
-The geometry creates rigid connection with the irregularly shaped sections of branches.\\
-
-Similar to the joint searching process with skeletons, the \textit{G-Code Generator} searches a set of four closest points from high-resolution contours, expecting that every intersected contour has four curves.
-After finding the four closest points, it trims two curves from each contour of branch. (two from intersecting branch and two from intersected branch) at each joint.
-The trimmed contours are transformed to the original scanned orientation and used for generating milling paths.
-Two curves from an intersected branch are used for side cuts milling paths, which are inwardly offset paths of the original branch contours. 
-The center cuts are paths that are plaining the top surface of the joint.
-Height of center cuts is calculated with a diameter of cross-section at the center of a joint and the actual height information stored in point cloud. \todo{strange sentence}
-
-
-\begin{figure}[ht]
-  \begin{center}
-    \includegraphics[width = 0.4\paperwidth]{images/system/joint_milling_diagram_4.png}
-    \caption{An example of intersected pair: 1. an assembled pair of branches. 2. branches after the center and side cuts are milled 3. left: a layout defined by a user right: the original orientations of branches with generated milling paths with red color.  }
-    \label{fig:joint_geometry}
-  \end{center}
-\end{figure}
-
-

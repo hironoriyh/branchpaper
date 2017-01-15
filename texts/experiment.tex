@@ -1,44 +1,46 @@
 \section{Case Study}
 \label{sec:casestudy}
-A design and fabrication workshop was organized to examine the validity of our system with a specific design target and a location.
-We selected a public community house where people in the community share the space and regularly use the facility and participants were selected among them.
-Participants are four children aged 10 and under (4, 7, 9 , and 10 years old) and two parents (Figure~\ref{fig:workshop}).
-We specifically selected children with the age range as non-experts without experiences in computational design or digital fabrication, also for observing the clarity and attractiveness of the game.
+A design and fabrication workshop was organized to examine the feasibility of our system with a specific design target and a location.
+We selected a public community house where people in the community share the space and regularly use the facility.
+Participants of the workshop were selected among them, who were four children aged 10 and under (4, 7, 9 , and 10 years old) and two parents (Figure~\ref{fig:workshop}).
+We specifically selected children with this range of age as non-experts without experiences in computational design or digital fabrication, also for observing the clarity and attractiveness of the game.
+The entire workshop was filmed and documented in a short clip.
+Please refer the supplementary video material for the documentation.
 
-The goal for the participants is to contribute to an ongoing design and fabrication process of screen wall (2m by 0.9m) consisting of 8 rectangles.
+The goal for the participants was to contribute to an ongoing design and fabrication process of screen wall (2m by 0.9m) consisting of 8 rectangles.
 Six frames were already designed and built, thus the rest two frames were prioritized for them to design and fabricate in this workshop.
 
-Participants are asked to follow the entire process from collecting and fixing the branches on a plate, scanning the plate, complete designs by playing the game, and assembly after the CNC milling.
 Participants were informed about the goal of the workshop, and each process was introduced by experienced tutors.
+The processes were from collecting and fixing the branches on a plate, scanning the plate, complete designs by playing the game, and assembly after CNC milling.
 
 \begin{figure}[ht]
   \begin{center}
     \includegraphics[width = 0.4\paperwidth]{images/fabrication/workshop_setup.png}
-    \caption{An overview of the workshop. 1.the overview of the space. 2.collect branches. 3.cut 4.attach on a plate 5.scan 6.play the game 7.CNC milling.}
+    \caption{An overview of the workshop. 1.the overview of the space. 2.collect branches. 3.cut in certain lengths 4.attach on a plate 5.scan the plate 6.play the game 7.CNC milling.}
     \label{fig:workshop}
   \end{center}
 \end{figure}
 
 \subsection{Setup}
 \subsubsection*{System and Hardware Setup}
-We used two iPad minis with iSense scanners attached for scanning branches, and a 3 axis CNC milling router with a 6 mm diameter milling bit.
+We used two iPad-minis with iSense depth cameras attached for scanning branches, and a 3 axis CNC milling router with a 6 mm diameter milling bit.
 We used a laptop PC (Lenovo w240 with intel core i7) for running \textit{Branch Importer} and \textit{G-Code generator}, as well as operating the milling machine.
-The scan area of iSense is 500mm x 500mm, and the milling machine's stroke along z-axis is 70mm, which provide geometric constraints for available branch sizes.
+The scan area of iSense camera is 500mm x 500mm, and the milling machine's stroke length along z-axis is 70mm, which provide geometric constraints for available branch sizes.
 \textit{BranchConnect} was hosted at \textit{Heroku} cloud server \footnote{ Heroku is a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud. \url{https://www.heroku.com/}},
 and we used \textit{MongoDB} \footnote{ MongoDB is a free and open-source cross-platform document-oriented database program. \url{https://www.mongodb.com/}} as a cloud database.
 
 \subsubsection*{Preparation of Branches}
 The participants were asked to collect branches with 2 - 10 cm in diameter.
-The lower bound of the diameter is for milling process would not destroy them, and the upper bound is for the limit of z-stroke of the CNC router.
-The collected branches are cut in arbitrary lengths, not longer than 500 mm due to the limit of scanning area. \\
+The lower bound of the diameter was set due to the milling bit size, and the upper bound was set for the limited length of z-stroke of the CNC router.
+The collected branches were cut in arbitrary lengths, not longer than 500 mm due to the limit of scanning area. \\
 
-As our game system and fabrication process take 3D branch shapes as 2D contours with height map, these constraints work positive for the system automatically filtering out branches with large 3D twists.
-We ask participants to scan with iPad + iSense and prepare feasible mesh model by themselves.
-After obtaining mesh models, tutors import models from iPads to a laptop and upload them to database by \textit{Branch Importer}.
+As our game system and fabrication process take 3D branch shapes as 2D contours (with limited use of point cloud), these constraints work positive for the system which automatically filter out branches with large 3D twists.
+We asked participants to scan with iPad + iSense and prepare feasible mesh model by themselves.
+After obtaining mesh models, tutors imported models from iPads to a laptop and upload them to database by \textit{Branch Importer}.
 
 
 \subsubsection*{User Experiences with the System}
-After models were uploaded to the server, users can see that their plates are added in the selectable branch plates with their names and locations.
+After models are uploaded to the server, users can see that their plates are added in the selectable branch plates with their names and locations.
 Users can access to the start page by PC and mobile devices.
 We prepare both options and let participants choose a device.
 
@@ -75,7 +77,7 @@ Table \ref{tab:timing} shows durations of each task.
     Inspecting models             & 0.2 & 4.3 \\
     CNC milling                   & 0.5 & 10.8\\
     Assembling                    & 0.2 & 4.3 \\
-    Miscellaneous                 & 1.0 & 21.7 \\
+    Moving, pauses               & 1.0 & 21.7 \\
     \hline
     In total                      & 4.6   & 100 \\
     \hline
@@ -91,7 +93,7 @@ These fixture points are counted as invalid points in the game where joinery poi
 The participants built two plates with three and five branches fixed on each plate.
 
 \subsubsection*{Model Acquisition}
-iSense 3D scanners come with an intuitive software for scanning and modifying models.
+iSense camera comes with an intuitive software for scanning and modifying models.
 After we gave an instruction, most of participants practiced several scans and successfully scanned models without any problem.
 
 Each scanning and re-touching took 2-3 minutes, and 30 seconds for generating data by \textit{Branch Importer}.
