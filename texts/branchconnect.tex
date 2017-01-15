@@ -174,10 +174,10 @@ The weights 'w1...w5' are non-negative weight coefficients pre-adjusted in advan
 \begin{equation} \label{eq:cost}
  \begin{aligned}
  Score =  &\; w_1  \sum_{1}^{N(\mathcal{B})} \sum_{1}^{N(\mathcal{J}_{\text{valid},i})} j_{\text{valid}, j, i}
-	& + \; &w_2  \sum_{1}^{N(\mathcal{B})} \sum_{1}^{N(\mathcal{J}_{\text{invalid},i})} j_{\text{invalid}, j, i}\\
-+ &\; w_3  \sum_{1}^{N(\mathcal{G})} g_{\text{islanded}} \;
-	& + \; &w_4  \sum_{1}^{N(\mathcal{T})} t_{\text{bridged}} \; \\
-+ &\; w_5 \sum_{1}^{N(\mathcal{T})} trimmed(t_j, b_i)
+ + w_2  \sum_{1}^{N(\mathcal{B})} \sum_{1}^{N(\mathcal{J}_{\text{invalid},i})} j_{\text{invalid}, j, i}\\
++ &\; w_3  \sum_{1}^{N(\mathcal{G})} g_{\text{islanded}}
+	 + w_4  \sum_{1}^{N(\mathcal{T})} t_{\text{bridged}}
++  w_5 \sum_{1}^{N(\mathcal{T})} trimmed(t_j, b_i)
  \\
    \textrm{s.t.} \; w_j  \geq  &\;0 \; \forall j \in 1, \dotsc , 5
  \end{aligned}
