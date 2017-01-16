@@ -8,24 +8,24 @@ Reacting on the issue, designers and architects actively use local materials not
 % As a result, we see similar-looking buildings all over the world.
 %The aesthetic quality of the combination of construction techniques to deal with building components is described as "techtonik".
 % Including management of construction, guidelines for maintenance to building materials and construction techniques, we call it as building starndard.
-Since primitive shelters and huts, traditional construction has used locally found natural materials directly as they are found \cite{weston2003materials}.
+Since primitive shelters and huts, traditional construction has used locally found natural materials directly in their native forms \cite{weston2003materials}.
 Such a direct use can not compete with highly standardized materials and construction system, however, the uniqueness of native forms is a valuable quality which is lacking in standardized materials.
 As the material is locally obtained, building and living get much closer, thus people using the building can easily commit design and fabrication, fostering the sense of belonging to the community.
 Locally obtained materials can easily connect design and the context of built environment in this way, but their irregular properties limit the use of them in modern buildings.
 Traditionally, craftsman has taken care irregular natural materials varying their native forms and dynamically design the global design by considering individual material properties \cite{pye1968nature}.
-Such a task is difficult to be automated and these skills are developed through years of training, thus the use of native forms typically costs more than standardized construction system. \\
+Such a task is difficult to be automated and these skills are developed through years of training, thus the use of native forms typically inaccessible for end users and costs more than standardized construction system. \\
 
-This paper aims to make the above-mentioned qualities of materials with native forms more accessible by digital technologies.
-We use locally obtained branches which can be found almost everywhere not only in country-side but also in urban environment such as parks and along streets.
+This paper aims to make the above-mentioned qualities of materials in native forms more accessible for end users by leveraging digital technologies.
+We use locally obtained branches which can be found almost everywhere not only in countryside but also in urban environment such as parks and along streets.
 Public service takes care of these branches: annual pruning, storing, and chipping or burning with some costs.
-The size of branches (from 50 -300 $mm$ in diameter) is too small for furniture or other structural applications.
+The size of branches (from 50 -300 $mm$ in diameter) is too small for furniture or other structural applications as building components.
 It is a challenge for digital design and fabrication to utilize the diverse branches in meaningful ways.
-High-precision but low-cost scanning devices and personal digital fabrication machines make it possible to analyze and control natural materials with diverse native forms.
+High-precision but low-cost scanning devices and personal digital fabrication machines make it possible to analyze and control natural materials in diverse native forms.
 
 The key technical difficulty of materials with natives forms is design.
-Optimization is a straightforward approach: minimize an energy function which integrates structural and fabrication costs.
+A possible approach is optimization: minimize an energy function which integrates structural and fabrication costs.
 This approach, however, is limited to particular design scenario with specific materials.
-Furthermore, the concept of optimum solution is well suited to goals such as efficiency or low-cost, but these goals are not the qualities materials with natives forms can compete with standardized construction systems.
+Furthermore, the concept of optimum solution is well suited to goals such as efficiency or low-cost, but these goals are not the qualities materials in natives forms can compete with standardized construction systems.
 Instead, we take humans in our scan-design-fabricate workflow not only to solve the design problem, but also to provide an opportunity for people to participate in the workflow.
 Traditionally, in case of constructing public and symbolic buildings, such as church, people in a community took initiatives from fund raising to design, or even in construction process.
 % In this way, our method would be applicable to other kinds of materials with diverse shapes.
@@ -39,28 +39,28 @@ Traditionally, in case of constructing public and symbolic buildings, such as ch
 
 
 In this paper, we report our case study to design and fabricate an architectural element out of irregularly shaped branches, using our humans-in-the-loop system.
-We developed an online platform where users can post branches found at hand, and design with them through the game \textit{BranchConnect}.
-The game system itself helps users to design valid branch layouts and enable them to fabricate customized joineries to connect them together without screws and adhesives.
-The design of our joinery extends the traditional orthogonal lap-joints to various angles within a range, freeing the diverse forms of woods from orthogonal connections.
-Physically collected branches are digitally scanned and stored in a cloud database \textit{BranchCollect}, and offline application \textit{Branch Importer} analyzes forms of branches and upload to the database.
+We developed an online platform where users can post branches found at hand, and design with them through the online game \textit{BranchConnect}.
+The game system itself helps users to design valid branch layouts and enable them to fabricate customized joints to connect them together without screws and adhesives.
+The design of our joint extends the traditional orthogonal lap-joints to various angles within a range, freeing the diverse forms of woods from orthogonal connections.
+Physically collected branches are digitally scanned and stored in a cloud database \textit{BranchCollect}, and offline application \textit{Branch Importer} analyzes forms of branches and upload them to the database.
 The simple visual feedback and scoring system of the game guide users to valid solutions, which are further inspected by an offline application \textit{G-Code\footnote{G-Code is the generic name for a control language for CNC machines.} Generator} for CNC milling process.
-The game system and developed import/export applications are currently limited to branches, however, the principle of human-in-the-loop for design is applicable for other kinds of materials with diverse irregular forms.
+The game system and developed import/export applications are currently limited to branches, however, the principle of human-in-the-loop with design is applicable for other kinds of materials with diverse irregular forms.
 We hope our method sheds lights on materials such as waste from demolition of buildings for various design applications.
 
-% but selected  as well as fabricating differentiated joineries by a CNC router.
+% but selected  as well as fabricating differentiated joints by a CNC router.
 % We propose an accessible design and fabrication platform, which allows multiple users to design with diverse irrefular forms of branches.
 
 In summary, our contributions are
 \begin{itemize}
  \item{a workflow enabling to take natural materials with native forms as design components.}
- \item{an online game-based approach to participatory design-fabrication.}
- \item{an algorithm to generate customized non-orthogonal joineries which are fabricatable by a CNC router.}
+ \item{an online game-based approach to participatory architectural design and fabrication.}
+ \item{a method to design and fabricate customized non-orthogonal joints using high-resolution contours.}
 \end{itemize}
 
 
 
 % First of all, non-standard materials are considered to be expensive and less performative compared to standardized building materials.
-% For example, fabricating wooden joineries is considered to be an art due to the heterogeneous wooden structure and its precisions, resulting in higher cost than repetitive assembly of standard components \cite{seike1977art}.
+% For example, fabricating wooden joints is considered to be an art due to the heterogeneous wooden structure and its precisions, resulting in higher cost than repetitive assembly of standard components \cite{seike1977art}.
 % In the context of fabrication, Pye \shortcite{pye1968nature} described such a skill as ``\textit{workmanship with risks}'', in contrast to ``\textit{workmanship with certainty}''.
 % Due to the complexity, these skills are not fully automated yet, thus we rely on skilled-workers to design and fabricate with these diverse materials.
 % Second of all, building design and construction became highly specialized professions.

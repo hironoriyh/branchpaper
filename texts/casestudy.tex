@@ -93,7 +93,7 @@ Participants were asked to assembly branches after joineries were milled.
 
 
 The entire workshop took 4.6 hours to complete the whole process, including introduction, moving, and pauses.
-Table \ref{tab:timing} shows durations of each task.
+Table below shows durations of each task.
 
 \begin{center}
   \begin{tabulary}{\columnwidth}{ |l||C|C| }
@@ -135,6 +135,28 @@ The result is shown in Figure \ref{fig:scannedplates}.
 
 
 \subsubsection*{Design with the Game}
+Figure \ref{fig:testlayouts} shows 32 example layouts with scores.
+We set the weights in Equation \ref{eq:score} as shown in Table below.
+
+\begin{center}
+	\begin{tabulary}{\columnwidth}{ |1|C|C|C|C|C|C|    }
+		\hline
+		weigths & $w_1$ & $w_2$ & $w_3$ & $w_4$ & $w_5$ \\
+		\hline
+		our setting & 100 & -100 & -1000 & 500 & -5\\
+		\hline
+	\end{tabulary}
+	\label{tab:weights}
+\end{center}
+
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width = 0.4\paperwidth]{images/fabrication/designs_score.png}
+		\caption{Example layouts by authors in score-descending order. The highest score is top-left and the lowest score is bottom-right.}
+		\label{fig:testlayouts}
+	\end{center}
+\end{figure}
+
 One participant switched to play by a PC for more precise control due to the problem.
 Interestingly, all the participants chose to develop their own designs from the scratch, although they had instruction about the "continue existing designs".
 
