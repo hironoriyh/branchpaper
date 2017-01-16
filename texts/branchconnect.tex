@@ -18,14 +18,17 @@ We also assume that every fabricated joint works as a rigid joint, thus single c
 %  \end{center}
 %\end{figure}
 
-Firstly a user selects a frame indicating multiple target points to be connected, and then selects a set of branches fixed on a plate (The left in Figure \ref{fig:game_interface}).
-After selecting the target frame and the set of branches, the user is guided to the game interface, consisting of the frame with the target points, and the set of available branches (The right in Figure \ref{fig:game_interface}).
-The user picks a branch from the available set on the bottom, and then places it in an arbitrary 2D pose through basic manipulations such as move, rotate, and flip.
-The number of available branches differs depending on plates.
-With the feasible diameter of branches (over 2cm) and the plate size (50cm x 50cm), the number of available branches is most likely up to six.
-Within the limited number of branches, the user bridges all the target points by connecting all the used branches in one group.
-The game is completed when all the target points are connected.
-For higher score, the user can modify the design after the completion, and save it to the database.
+Describing user experience, firstly a user selects a target frame indicating multiple target points to be connected, and then selects a set of branches fixed on a plate (the left in Figure \ref{fig:game_interface}).
+After selecting the target frame and the set of branches, the user is guided to the game interface, consisting of the frame with the target points, and the set of available branches at the bottom (the right in Figure \ref{fig:game_interface}).
+The user picks a branch from the available set on the bottom, and drag\&drop it to the inside of the target frame.
+By selecting and dragging a branch, the user searches a good 2D pose through geometric manipulations such as move, rotate, and horizontal flip (or mirror).
+A joint is created when an intersecting pair is detected, and the pair forms a group.
+The group is used for evaluating connections between target points (\textit{Bridged}).
+The conditions of joint and group are indicated with simple color-code.
+%Once the user finishes positioning, score is updated with weighted sum of parameters.
+Together with the color-code, the score update guides the user to form a valid design.
+Within the limited number of branches, the goal is to bridge all the target points by connecting all the used branches in one group.
+For higher scores, the user can keep modifying the design, and save it to the database.
 
 \begin{figure}[H]
   \begin{center}
@@ -35,26 +38,22 @@ For higher score, the user can modify the design after the completion, and save 
   \end{center}
 \end{figure}
 %
-\subsection{Overview}
-There are many collision detection libraries available, however, our game needs to detect intersected branch pairs, thus surface contact detection is overkill for our application.
-Also most branches come with free-form concave shapes, thus further geometric preparation such as convex decomposition is necessary for using these libraries.
-For fast and robust intersection detection, our system extensively uses down-sampled skeletons of branches.
+\subsection{The Game System}
+There are many physics simulation libraries for game, however, our game needs to detect intersected branch pairs, thus collision detection with physics engines is overkill for our browser game.
+%Our game is running on browsers with rich 
+Also, branches have free-form concave shapes, thus further geometric preparation such as convex decomposition is necessary for using these libraries.
+For fast and robust intersection detection, our game extensively uses down-sampled skeletons of branches.
 
 Hubbard and Philip developed collision detection by representing an object with hierarchical 3D spheres aligned on a skeleton \cite{Hubbard:1996:APS:231731.231732}.
-Our system takes similar approach but limited in 2D, but more focused on searching fabricatable joints.
-In the game, simplified skeletons are used to find the pair of closest skeleton points between two branches.
-When a branch is selected, it is counted as an active, and the system searches the closest skeleton point from skeletons of other branches.
-More precise joint calculation with higher resolution is further described in the next section.
-
-A joint is created when an intersecting pair is detected, and the pair forms a group.
-The group is used for evaluating connections between target points (\textit{Bridged}).
-The game is completed once all the target points are connected by a group of branches.
-The conditions of joint and group are indicated with simple color-code.
-Once the user finishes positioning, score is updated with weighted sum of parameters.
-Together with the color-code, the score update guides the user to form a valid design.
+Our game takes similar approach but limited in 2D, but more focused on searching fabricatable joints.
+In the game, down-sampled skeletons are used to find the pair of closest skeleton points between two branches.
+When a branch is selected, the system searches the closest skeleton point of the selected branch with other skeletons of available branches.
+More precise joint calculation with high-resolution contours is further described in Section \ref{sec:fabrication}.
 
 
-\subsection{Joint Condition}
+
+
+\subsubsection{Joint Condition}
 \label{sec:joint}
 Joint is the essential entity not only in the game but also in the fabrication process of customized lapped joineries.
 Importantly, each pair of branches must have one flipped branch for fabrication constraint.
@@ -77,12 +76,16 @@ Valid and invalid joints are displayed with green and red respectively.
 
 
 
-To describe the process, we let $\mathcal{B}$ denotes a set of all the available branches, and each branch as $ b_i \in \mathcal{B}$.
-While the process checks joint condition through all the branches $\mathcal{B}$, each detected joint is stored in each branch $b_i$, categorized in different conditions such as valid and invalid joints denoted as $j_{\text{valid}, j, i} \in \mathcal{J}_{\text{valid},i}$ and $j_{\text{invalid}, j, i} \in \mathcal{J}_{\text{invalid},i}$ respectively.
-When a branch $b_i$ is connected to one of target point $t_j \in \mathcal{T} $, the $t_j$ is stored in $b_i$.
+To describe the process, $\mathcal{B}$ denotes a set of branches in the game, and each branch as $ b_i \in \mathcal{B}$.
+We accepet one joint with a pair of branches, however, a branch can have multiple joints with other branches. 
+The process in Figure \ref{fig:system_flowchart} picks one branch and checks joint conditions with all the other branches $\mathcal{B}$.
+Denoting $j$-th detected joint in the picked branch $b_i$ as $j_{i, j}$.
+Evaluating the joint condition in Figure \ref{fig:joint_condition}, they are further categorized as valid and invalid joints, denoted as $j_{\text{valid}, i, j} \in \mathcal{J}_{\text{valid},i}$ and $j_{\text{invalid}, i, j} \in \mathcal{J}_{\text{invalid},i}$ respectively.
+When a branch $b_i$ is connected to one of target points $t_j \in \mathcal{T} $, the target point $t_j$ is stored in $b_i$.
+Note that we also take one target point for each branch.
 
 
-A flowchart of the game system with joint and group conditions is illustrated in Figure \ref{fig:system_flowchart}.
+A flowchart of the joint and group conditions is illustrated in Figure \ref{fig:system_flowchart}.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -96,7 +99,7 @@ A flowchart of the game system with joint and group conditions is illustrated in
 
 
 
-\subsection{Group Condition}
+\subsubsection{Group Condition}
 
 After checking joint conditions of all the pairs of branches, the system checks the number of groups as well as its connection with the target points on a frame.
 If a group is not connected to any target point nor other groups, the group is \textit{Islanded} and structurally invalid.
@@ -162,8 +165,8 @@ The algorithm which checks group conditions is described in Algorithm \ref{al:co
   \label{al:connection}
 \end{algorithm}
 
-\subsection{Score Calculation}
-In the score calculation processes, follwoing entities forms the score: the numbers of valid and invalid joints on each branch, the number of groups as $N(\mathcal{G} )$, the number of islanded groups as $N(g_{\text{islanded}} \in \mathcal{G} )$, the number of bridged target points as $N(t_{\text{bridged}, i}) \in \mathcal{T} )$.
+\subsubsection{Score Calculation}
+We calculate the score with weighted sum of followign entities: the numbers of valid and invalid joints on each branch, the number of groups as $N(\mathcal{G} )$, the number of islanded groups as $N(g_{\text{islanded}} \in \mathcal{G} )$, the number of bridged target points as $N(t_{\text{bridged}, i}) \in \mathcal{T} )$.
 The trimmed lengths of branches which are connected with target points are denoted as $trimmed(t_j, b_i)$
 The score is weighted sum of these joint and group conditions, denoted in Equation (\ref{eq:cost}).
 The weights $w_1 \dotso  w_5$ are non-negative weight coefficients pre-adjusted in advance by authors.
@@ -179,4 +182,5 @@ The weights $w_1 \dotso  w_5$ are non-negative weight coefficients pre-adjusted 
  \\
    \textrm{s.t.} \; w_j  \geq  &\;0 \; \forall j \in 1, \dotsc , 5
  \end{aligned}
+ \label{eq:score}
 \end{equation}

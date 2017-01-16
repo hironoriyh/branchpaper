@@ -4,8 +4,10 @@ A design and fabrication workshop was organized to examine the feasibility of ou
 We selected a public community house where people in the community share the space and regularly use the facility.
 Participants of the workshop were selected among them, who were four children (aged 4, 7, 9, and 10) and two parents (Figure~\ref{fig:workshop}).
 We specifically selected children with this range of age as non-experts without experiences in computational design or digital fabrication, also for observing the clarity and attractiveness of the game.
-The entire workshop was filmed and documented in a short clip.
-Please refer the supplementary video material for the documentation.
+
+The entire workshop was filmed and summarized in the supplementary video material.
+Prior to the workshop, we have adjusted the weights in Equation \ref{eq:score} manually to ensure that the feasibility of layouts is correlating to the scores (see Figure \ref{fig:testlayouts}). 
+Through adjusting the game setting, we have built six target frames.
 
 The goal for the participants was to contribute to an ongoing design and fabrication process of screen wall (2000 $mm$ $\times$ 900 $mm$) consisting of eight rectangles (500 $mm$ $\times$ 450 $mm$).
 Six frames were already designed and built, thus the rest two frames were prioritized for them to design and fabricate in this workshop.
@@ -26,24 +28,27 @@ The processes were from collecting and fixing the branches on a plate, scanning 
 We used two iPad minis with iSense depth cameras attached for scanning branches, and a 3 axis CNC milling router with a 6 mm diameter milling bit.
 We used a laptop PC for running \textit{Branch Importer} and \textit{G-Code generator}, as well as operating the milling machine.
 The scan area of iSense camera is 500 $mm$ $\times$ 500 $mm$, and the milling machine's stroke length along z-axis is 70 $mm$, which provide geometric constraints for available branch sizes.
-\textit{BranchConnect} was hosted at \textit{Heroku} cloud server \footnote{ Heroku is a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud. \url{https://www.heroku.com/}},
-and we used \textit{MongoDB} \footnote{ MongoDB is a free and open-source cross-platform document-oriented database program. \url{https://www.mongodb.com/}} as a cloud database.
+\textit{BranchConnect} was hosted at \textit{Heroku} cloud server \footnote{Heroku is a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud. \url{https://www.heroku.com/}},
+and we used \textit{MongoDB} \footnote{MongoDB is a free and open-source cross-platform document-oriented database program. \url{https://www.mongodb.com/}} as a cloud database.
 
 \subsubsection*{Preparations}
 The participants were asked to collect branches with 20 - 100 $mm$ in diameter.
-The lower bound of the diameter was set due to the milling bit size, and the upper bound was set for the limited length of z-stroke of the CNC router.
+The lower bound was for the milling bit size, and the upper bound was for the limited length of z-stroke of the CNC router.
 The collected branches were cut in arbitrary lengths, not longer than 500 $mm$ due to the limit of scanning area. 
-As our game system and fabrication process take 3D branch shapes as 2D contours (with limited use of point cloud), these constraints worked positive for the system by filtering out branches with large 3D twists.
+As our game system and fabrication process take 3D branch shapes as 2D contours (with limited use of point cloud), these constraints were benefitial for the system by filtering out branches with large 3D twists.
 The diameter and length constraints worked as guidelines for participants rather than restricting finding and cutting arbitrary branches.
+The number of available branches per plate was different depending on branch sizes.
+Within the feasible diameter of branches and the plate size, the number of available branches was  most up to six (see Figure \ref{fig:scannedplates}).
 
-After cutting branches in certain lengths, participants fixed branches on plates by thin metal plates with screw holes.
-It was straightforward for them to firmly fix branches so that they are not moved during milling process.
+After cutting branches in certain lengths, participants fixed branches on plates by thin metal fixtures with screw holes.
+After an instruction, participants successfully fixed branches by themselves.
+%It was straightforward for them to firmly fix branches so that they are not moved during milling process.
 %These fixture points are counted as invalid points in the game where joinery points can not be generated.
-The participants built two plates with three and five branches fixed on each plate.
+They built two plates with three and five branches fixed on each plate.
 
-After finidhing the plates, we asked participants to scan with iPad + iSense and prepare feasible mesh model by themselves.
+After fixing branches on plates, we asked participants to scan them prepare feasible mesh model on iSence application running on iPad mini.
 Thanks to the intuitive interface of iSense, participants practiced several scans and successfully scanned models without problem.
-After obtaining mesh models, tutors imported models from iPads to a laptop and upload them to database by \textit{Branch Importer}.
+After obtaining mesh models, tutors imported models from iPads to a laptop and uploaded them to the database by \textit{Branch Importer}.
 
 
 
@@ -85,6 +90,8 @@ After selecting layouts, an experienced tutor operates \textit{G-Code Generator}
 Participants were asked to assembly branches after joineries were milled.
 
 \subsection{Results}
+
+
 The entire workshop took 4.6 hours to complete the whole process, including introduction, moving, and pauses.
 Table \ref{tab:timing} shows durations of each task.
 
@@ -128,8 +135,6 @@ The result is shown in Figure \ref{fig:scannedplates}.
 
 
 \subsubsection*{Design with the Game}
-
-
 One participant switched to play by a PC for more precise control due to the problem.
 Interestingly, all the participants chose to develop their own designs from the scratch, although they had instruction about the "continue existing designs".
 
