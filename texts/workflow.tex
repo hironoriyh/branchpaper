@@ -52,7 +52,7 @@ In case joineries are invalid with the high-resolution model, a layout can be ea
 Users can also change milling parameters such as offset ratio for the side cuts, milling bit diameter, depth of joineries, cutting speed, moving height and so forth.
 After confirming the fabrication settings and milling paths, it generates G-Code.\\
 
-Some fabrication factors such as invalid points due to metal fixtures and flipped (further described in Seciton \ref{sec:joint}) are already considered by \textit{Branch Importer} and the game system respectively.
+Some fabrication factors such as invalid points due to metal fixtures and flipped (further described in Section \ref{sec:joint}) are already considered by \textit{Branch Importer} and the game system respectively.
 In this section, we describe the process of joinery generation.
 Each joinery's geometry is parametrically modeled with two planar surfaces on the sides of branches (side cuts) and one planar top surface (center cuts) (see Figure \ref{fig:joint_geometry}.2).
 Side cuts have wedged corners for smooth assembly process.
@@ -60,10 +60,18 @@ The geometry creates rigid joints with irregularly shaped sections of branches.\
 
 \begin{figure}[ht]
   \begin{center}
-    \includegraphics[width = 0.4\paperwidth]{images/system/joint_generator_2.png}
-    \caption{Interface of \textit{G-Code Generator}. Left: a layout defined by a user with joineries. Right: an original orientation of a scanned plate with joineries. }
+    \includegraphics[width = 0.35\paperwidth]{images/system/gcode_generator_interface.png}
+    \caption{The interface of \textit{G-Code Generator}. Left: a layout defined by a user. Right: the original orientations of branches with generated milling paths with red color. }
     \label{fig:gcode_gen}
   \end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width = 0.4\paperwidth]{images/system/joint_closeup.png}
+		\caption{An example of joinery. Left: branches after the center and side cuts are milled. Right: an assembled pair of branches. }
+		\label{fig:joint_geometry}
+	\end{center}
 \end{figure}
 
 Similar to the joint searching process with skeletons (see Section \ref{sec:joint}), the \textit{G-Code Generator} searches a set of four closest points from high-resolution contours, expecting that every intersected contour has four curves.
@@ -75,10 +83,4 @@ The diameter as the joint is calculated with the contour.
 We compare this value with actual height from the stored point cloud.
 In case of uder-cuts, the system detects different values and adjust the center cuts according to the recalculated diameter.
 
-\begin{figure}[H]
-  \begin{center}
-    \includegraphics[width = 0.4\paperwidth]{images/system/joint_milling_diagram_4.png}
-    \caption{An example of intersected pair of branches: 1. left: a layout defined by a user right: the original orientations of branches with generated milling paths with red color. 2. branches after the center and side cuts are milled. 3. an assembled pair of branches. }
-    \label{fig:joint_geometry}
-  \end{center}
-\end{figure}
+
