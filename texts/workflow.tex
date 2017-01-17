@@ -28,8 +28,8 @@ The system first idendifies branches by applying simple height threshold, and th
 The obtained 2D contours are used for extracting skeletons and clustering verticies in the mesh model.
 Contours are triangulated and skeleton points are extracted from middle points on edges of triangles.
 These middle points are compared with top view image.
-If the point is inside of a contour, the middle point is counted as a valid point.
-After extracting valid middle points, the connectivity of skeletons is analyzed.
+If the point is inside of a contour, the middle point is counted as a skeleton point.
+After extracting skeleton points, the connectivity of skeletons is analyzed.
 In case grafting branch (Y-shaped branch) is detected, a new skeleton sub-branch is added.
 The result is shown in Figure ~\ref{fig:skeleton}.
 %Evaluating the number of sub-branches, the branch is morphologically classified.
@@ -45,7 +45,7 @@ The acquired information is stored in a cloud database.
 
 \subsection{Fabrication}
 \label{sec:fabrication}
-After a design is selected for fabrication, the validity of the design is further inspected by a high-resolution model.
+After a design is selected for fabrication, the fabricatability of the design is further inspected by a high-resolution model.
 The \textit{G-Code Generator} displays joints and milling paths on scanned orientations.
 If it identifies an invalid joint in the high resolution model, a layout can be easily modified with simple mouse inputs (Figure \ref{fig:joint_geometry}.1 and \ref{fig:joint_geometry}.2).
 Users can also change milling parameters such as offset ratio of milling paths, milling bit diameter, depth of joints, cutting speed, moving height and so forth.
