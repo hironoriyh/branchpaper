@@ -49,7 +49,8 @@ For fast and robust intersection detection, our game extensively uses down-sampl
 Hubbard and Philip developed collision detection by representing an object with hierarchical 3D spheres aligned on a skeleton \cite{Hubbard:1996:APS:231731.231732}.
 Our game takes similar approach but limited in 2D, but more focused on searching fabricatable joints.
 In the game, down-sampled skeletons are used to find the pair of closest skeleton points between two branches.
-When a branch is selected, the system searches the closest skeleton point of the selected branch with other skeletons of available branches.
+While a branch is selected, the system searches the closest skeleton point of the selected branch with other skeletons of available branches.
+If the distance of a pair of the closest skeleton points is smaller than a threshold, the pair is intersected.
 More precise joint calculation with high-resolution contours is further described in Section \ref{sec:fabrication}.
 
 
@@ -94,16 +95,16 @@ Note that we also take one target point per branch.
 The branch connected to the target point is trimmed at the target point.
 The trimmed length $l_{\text{trim}, i}$ is stored in $b_i$ and use as a penalty for score calculation.
 In this way, the user tries to position the branch as inside of the frame as possible. 
-This process is iteratively executed while a user is positioning a branch with mouse-drag.
+This process is iteratively executed while a user is positioning a branch while dragging.
 
 
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width = 0.35\paperwidth]{images/system/closestPointAlgorithm.pdf}
-		\caption{Left: an overview of the game system with 1. joint update 2. group update and 3. score calculation. This process is iteratively executed while a user is exploring layout by dragging a branch. The joint update process is further illustrated in the right, and group condition update is described in Algorithm \ref{al:connection}. }
-		\label{fig:system_flowchart}
-	\end{center}
-\end{figure}
+%\begin{figure}[h]
+%	\begin{center}
+%		\includegraphics[width = 0.35\paperwidth]{images/system/closestPointAlgorithm.pdf}
+%		\caption{Left: an overview of the game system with 1. joint update 2. group update and 3. score calculation. This process is iteratively executed while a user is exploring layout by dragging a branch. The joint update process is further illustrated in the right, and group condition update is described in Algorithm \ref{al:connection}. }
+%		\label{fig:system_flowchart}
+%	\end{center}
+%\end{figure}
 
 % well as the paired branch $b_{\text{paired},j} \in \mathcal{P}_{\text{paired},i}}$.
 
@@ -128,13 +129,13 @@ Finally groups $g_j \in C_i$ are removed from $\mathcal{G}$.
 Iterating all $b_i \in \mathcal{B}$, we acquire the updated group condition.
 
 After updating the group, the process evaluates the connections with target points.
-If $b_i \in g_k \in \mathcal{G}$ has connection with a target point, the target point is stored in the group $g_k$.
+If $b_i \in g_k \in \mathcal{G}$ has a connection with a target point, the target point is stored in the group $g_k$.
 If multiple groups with target points for each exist, the entire structure is feasible, however, these groups should be connected together (Figure \ref{fig:group} middle).
 If the group does not have any target point, the group is labeled as \textit{Islanded}, which is structurally infeasible thus counted as a penalty in the cost calculation (Figure \ref{fig:group} right).
 If the group has multiple target points, these target points are bridged.
-The game completes when the number of $\mathcal{G}$ is one, and all the target points are connected with the group without invalid joints.
+The game completes when the number of $\mathcal{G}$ is one, and all the target points are connected with the group, which does not have branches with invalid joints.
 The group update process is described in Algorithm \ref{al:connection}.
-The entire flowchart of the joint update process as well as the group update process are illustrated in Figure \ref{fig:system_flowchart}.
+%The entire flowchart of the joint update process as well as the group update process are illustrated in Figure \ref{fig:system_flowchart}.
 
 \begin{figure}[ht]
   \begin{center}
@@ -151,37 +152,35 @@ The entire flowchart of the joint update process as well as the group update pro
     \State{Reset all the groups $\mathcal{G}$ }
     \State{Create new group $g_0$}
     \State{$g_0$.adds $\left( b_0 \right) $}
-    \If{$b_0$.contains$\left( t_i \in \mathcal{T} \right) $ }
-      \State{$g_0$.adds$\left(t_i \right) $}
-    \EndIf
+%    \If{$b_0$.contains$\left( t_i \in \mathcal{T} \right) $ }
+%      \State{$g_0$.adds$\left(t_i \right) $}
+%    \EndIf
     \State{$\mathcal{G}$.adds$\left( g_0 \right) $ }
 
     \For{each branch $b_i \in \mathcal{B}$ except $b_0$}
     \State{\textit{initiate a list of connected group} $C_i$}
       \For{each group $g_j \in \mathcal{G}$}
           \If{ $g_j$.contains$ \left( b_i \right)$}
-            \State{ $G^\prime_i$.add$\left( g_j \right) $}
+            \State{ $C_i$.add$\left( g_j \right) $}
           \EndIf
       \EndFor
-	\If{ $C_i$.isEmpty}
-		\State{Create new group $g$}
-		\State{$g$.adds$\left(b_i \right) $}
-		\State{$\mathcal{G}$.adds$\left( g \right) $ }
-	\Else
-		\State{Create new group $g^\prime$}
-		\State{$g^\prime$.adds$\left(b_i \right) $}
-		\For{each group $g_j \in  G^\prime_i$}
+      
+  	\State{Create new group $g$}
+	\If{$C_i$.hasMember}
+		\For{each group $g_j \in  C_i$}
 			\For{each branch $b_k \in g_j$}
-				\If{$g^\prime$.contains$\left( b_k \right) =false$}
-						\State{$g^\prime$.adds$\left(b_k \right) $}
-				\EndIf
+%				\If{$g$.contains$\left( b_k \right) =false$}
+						\State{$g$.adds$\left(b_k \right) $}
+%				\EndIf
 			\EndFor
 		\EndFor
 		\For{each group $g_j \in  C_i$}
-			\State{$\mathcal{B}$.removes$\left(g_j \right) $}
+			\State{$\mathcal{G}$.removes$\left(g_j \right) $}
 		\EndFor
-		\State{$\mathcal{G}$.adds$\left( g \right) $ }
+
 	\EndIf
+	\State{$g$.adds$\left(b_i \right) $}
+	\State{$\mathcal{G}$.adds$\left( g \right) $ }
 	\EndFor
   \EndFunction
   \end{algorithmic}
@@ -189,21 +188,18 @@ The entire flowchart of the joint update process as well as the group update pro
 \end{algorithm}
 
 \subsubsection{Score Calculation}
-We calculate the score with weighted sum of following entities: the numbers of valid and invalid joints on each branch, the number of groups as $N(\mathcal{G} )$, the number of islanded groups as $N(g_{\text{islanded}} \in \mathcal{G} )$, the number of bridged target points as $N(t_{\text{bridged}, i}) \in \mathcal{T} )$.
-The trimmed lengths of branches which are connected with target points are denoted as $trimmed(t_j, b_i)$.
+We calculate the score with weighted sum of following entities: the numbers of valid and invalid joints on each branch as N($\mathcal{J}_{\text{valid},i}$) and  N($\mathcal{J}_{\text{invalid},i}$) respectively, the number of groups as $N(\mathcal{G} )$, the number of islanded groups as $N(g_{\text{islanded}})$, the number of bridged target points as $N(t_{\text{bridged}, i})$.
+The trimmed length $l_{\text{trim}, i}$ in each $b_i \in \mathcal{B}$
 The score is weighted sum of these joint and group conditions, denoted in Equation (\ref{eq:score}).
 The weights $w_1 \dotso  w_5$ are non-negative weight coefficients pre-adjusted in advance by authors.
 
 
 \begin{equation} 
  \begin{aligned}
- Score =  &\; w_1  \sum_{1}^{N(\mathcal{B})} \sum_{1}^{N(\mathcal{J}_{\text{valid},i})} j_{\text{valid}, j, i}
- + w_2  \sum_{1}^{N(\mathcal{B})} \sum_{1}^{N(\mathcal{J}_{\text{invalid},i})} j_{\text{invalid}, j, i}\\
-+ &\; w_3  \sum_{1}^{N(\mathcal{G})} g_{\text{islanded}}
-	 + w_4  \sum_{1}^{N(\mathcal{T})} t_{\text{bridged}}
-+  w_5 \sum_{1}^{N(\mathcal{T})} trimmed(t_j, b_i)
+ Score =  &\; w_1\;  \sum_{1}^{N(\mathcal{B})} N(\mathcal{J}_{\text{valid},i})\; +  \;w_2\; \sum_{1}^{N(\mathcal{B})} N(\mathcal{J}_{\text{invalid},i})\\
+		+ &\; w_3\;  N(g_{\text{islanded}} \in \mathcal{G} )\;				 	 \;+  \;w_4\;  N(t_{\text{bridged}, i}) \; +  \;w_5\; \sum_{1}^{N(\mathcal{B})} l_{\text{trim}, i}
  \\
-   \textrm{s.t.} \; w_j  \geq  &\;0 \; \forall j \in 1, \dotsc , 5
+   \textrm{s.t.} \; w_j  \geq  &\;0 \; \forall j \in 1, \dotsc , 5 
  \end{aligned}
  \label{eq:score}
 \end{equation}
