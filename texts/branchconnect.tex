@@ -5,7 +5,8 @@ The objective of the game is to collect valid layouts of branches which are fabr
 By analyzing the connectivity of branches and target points, the game checks feasibility of a given layout.
 Similar to our game, the work \textit{guidance system during furniture design} inspected connectivity, durability, and stability \cite{umetani2012guided}.
 Unlike their work, our game puts emphasis on \textit{fabricatability}, as well as \textit{geometric connectivity}, and does not calculate structural performance of each joint.
-Instead, we limit valid layout space by selected joint conditions, and group conditions.
+%Instead, we limit valid layout space by selected joint conditions, and group conditions.
+Instead we use simple geometric analysis to compute validity.
 We also assume that every fabricated joint works as a rigid joint, thus single connection is counted as stable to hold a pair of branches.
 
 
@@ -18,8 +19,11 @@ We also assume that every fabricated joint works as a rigid joint, thus single c
 %  \end{center}
 %\end{figure}
 
-Describing user experience, firstly a user selects a target frame indicating multiple target points to be connected, and then selects a set of branches fixed on a plate (the left in Figure \ref{fig:game_interface}).
-After selecting the target frame and the set of branches, the user is guided to the game interface, consisting of the frame with the target points, and the set of available branches at the bottom (the right in Figure \ref{fig:game_interface}).
+%Describing user experience, firstly a user selects a target frame indicating multiple target points to be connected, and then selects a set of branches fixed on a plate (the left in Figure \ref{fig:game_interface}).
+Each frame comes with a set of predefined target points on it to be connected.
+%A user selects a target frame and connect the assigned target points
+The distribution of these target points is predefined by the system, and end users can not modify them.
+After a user selects a target frame and a set of branches on a plate (Figure \ref{fig:game_interface} left), the user is guided to the game interface, consisting of the frame with the target points, and the set of available branches at the bottom (Figure \ref{fig:game_interface} right).
 The user picks a branch from the available set on the bottom, and drag\&drop it to the inside of the target frame.
 By selecting and dragging a branch, the user searches a good 2D pose through geometric manipulations such as move, rotate, and horizontal flip (or mirror).
 A joint is created when an intersecting pair is detected, and the pair forms a group.
@@ -56,12 +60,12 @@ More precise joint calculation with high-resolution contours is further describe
 \subsubsection{Joint Condition}
 \label{sec:joint}
 Joint is the essential entity not only in the game but also in the fabrication process of customized lapped joineries.
-Importantly, each pair of branches must have one flipped branch for fabrication constraint (see Section \ref{sec:fabrication}).
+Importantly, each pair of branches must have one flipped branch for fabrication constraint (Section \ref{sec:fabrication}).
 Figure~\ref{fig:joint_condition} illustrates valid and invalid joint conditions.
-Our joint only takes crossed pair (see Figure~\ref{fig:joint_condition}.1) because they are structurally stable, relatively simple to fabricate, and creates diverse designs.
-Tangential connections are counted as invalid as fabrication of tangential joinery is challenging with small branches (see Figure~\ref{fig:joint_condition}.3).
-A valid joint's angle stays within a fixed range (see Figure~\ref{fig:joint_condition}.1 and 2).
-Joints close to metal fixtures are also counted as invalid (see Figure~\ref{fig:joint_condition}.4).
+Our joint only takes crossed pair (Figure~\ref{fig:joint_condition}.1) because they are structurally stable, relatively simple to fabricate, and creates diverse designs.
+Tangential connections are counted as invalid as fabrication of tangential joinery is challenging with small branches (Figure~\ref{fig:joint_condition}.3).
+A valid joint's angle stays within a fixed range (Figure~\ref{fig:joint_condition}.1 and 2).
+Joints close to metal fixtures are also counted as invalid (Figure~\ref{fig:joint_condition}.4).
 Valid and invalid joints are displayed with green and red respectively.
 
 \begin{figure}[ht]
@@ -79,7 +83,7 @@ To describe the joint update process, let each branch $b_i$ be a member of a set
 The user freely choose $\mathcal{B} \in \mathcal{B_{plate}}$, where $\mathcal{B_{plate}}$ is the branches fixed on a selected plate, denoted as $\mathcal{B_{plate}}$.
 We accept one joint with a pair of branches, but a branch can have multiple joints with other branches. 
 The process starts from the selected branch $b_i$ and updates joint conditions of the selected branch with paired branches.
-When an intersected pair is detected, it stores $j$-th joint $j_{i, j}$ in $b_i$ with joint conditions (see Figure~\ref{fig:joint_condition}).
+When an intersected pair is detected, it stores $j$-th joint $j_{i, j}$ in $b_i$ with joint conditions (Figure~\ref{fig:joint_condition}).
 After evaluation, as in Figure \ref{fig:joint_condition},  we have joint labeled as valid or invalid.
 When a branch $b_i$ is connected to one of target points $t_j \in \mathcal{T}$, the target point $t_j$ is stored in $b_i$.
 Note that we also take one target point for each branch.
