@@ -45,21 +45,21 @@ The acquired information is stored in a cloud database.
 
 \subsection{Fabrication}
 \label{sec:fabrication}
-After a design is selected for fabrication, the fabricatability of the design is further inspected by a high-resolution model.
+After a design is selected for fabrication, fabricatability of the design is further inspected by a high-resolution model.
 The \textit{G-Code Generator} displays joints and milling paths on scanned orientations.
 If it identifies an invalid joint in the high resolution model, a layout can be easily modified with simple mouse inputs (Figure \ref{fig:joint_geometry}.1 and \ref{fig:joint_geometry}.2).
 Users can also change milling parameters such as offset ratio of milling paths, milling bit diameter, depth of joints, cutting speed, moving height and so forth.
 After confirming the fabrication settings and milling paths, it generates G-Code.\\
 
 Some fabrication factors such as invalid points due to metal fixtures and flipped (further described in Section \ref{sec:joint}) are already considered by \textit{Branch Importer} and the game system respectively.
-Here, we describe the process to calculate joint geometry and for fabrication.
-The \textit{G-Code Generator} searches a set of four closest points from high-resolution contours (Figure \ref{fig:joint_geometry}.1).
-Trimming contours of eash branch at the corner points, we get \textit{side cuts} and \textit{center cuts} (Figure \ref{fig:joint_geometry}.4).
+Here, we describe the process to calculate joint geometry for fabrication.
+The \textit{G-Code Generator} searches a set of four closest points on high-resolution contours (Figure \ref{fig:joint_geometry}.1).
+By trimming contours of each branch at the corner points, we get \textit{side cuts} and \textit{center cuts} (Figure \ref{fig:joint_geometry}.4).
 %Please refer Appendix 1 for details of this process.
 \textit{Side cuts} have wedged corners for smooth assembly process.
 The depth of the \textit{center cuts} is half of the top height at the joint position from a mesh model (Figure \ref{fig:joint_geometry}.4).
-The bottom height is usually the height of base plate, however, in case of under-cuts with incomplete mesh model, we calculate a half of the diameter from the 2D contour and subtract it from the top height.
-The resulting geometry creates rigid joints with irregularly shaped sections of branches.
+The bottom height is usually the height of the base plate, however, in case of under-cuts with incomplete mesh model, we calculate a half of the diameter from the 2D contour and subtract it from the top height.
+The resulting geometry creates rigid joints with irregularly shaped sections.
 
 
 %\begin{figure}[ht]
@@ -77,7 +77,3 @@ The resulting geometry creates rigid joints with irregularly shaped sections of 
 		\label{fig:joint_geometry}
 	\end{center}
 \end{figure}
-
-
-
-

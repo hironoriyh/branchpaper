@@ -5,24 +5,11 @@ The objective of the game is to collect valid layouts of branches which are fabr
 By analyzing the connectivity of branches and target points, the game informs the feasibility of a given layout.
 Similar to our game, the work \textit{guidance system during furniture design} inspected connectivity, durability, and stability \cite{umetani2012guided}.
 Unlike their work, our game puts emphasis on \textit{fabricatability}, as well as \textit{geometric connectivity}, and does not calculate structural performance of each joint.
-%Instead, we limit valid layout space by selected joint conditions, and group conditions.
 Instead we use simple geometric analysis to compute validity.
 We also assume that every fabricated joint works as a rigid joint, thus single connection is counted as stable to hold a pair of branches.
 
-
-%The workflow of the game is illustrated in Figure~\ref{fig:game_flowchart}.
-%\begin{figure}[ht]
-%  \begin{center}
-%    \includegraphics[width = 0.25\paperwidth]{images/system/systemFlowChart.pdf}
-%    \caption{The workflow of \textit{BranchConnect}. Branch data and user design data are stored on cloud database.}
-%    \label{fig:game_flowchart}
-%  \end{center}
-%\end{figure}
-
-%Describing user experience, firstly a user selects a target frame indicating multiple target points to be connected, and then selects a set of branches fixed on a plate (the left in Figure \ref{fig:game_interface}).
 The overall user experience is as follows.
 In the selection interface (Figure \ref{fig:game_interface} left), each frame comes with a set of predefined target points to be connected.
-%A user selects a target frame and connect the assigned target points
 The distribution of these target points is predefined by the system, and end users can not modify them.
 After a user selects a target frame and a set of branches on a plate, the user is guided to the game interface (Figure \ref{fig:game_interface} right), consisting of the frame with the target points, and the set of available branches at the bottom.
 The user picks a branch from the available set on the bottom, and drag\&drop it to the inside of the target frame.
@@ -42,12 +29,13 @@ To achieve higher score, the user can keep modifying the design, and save it to 
 %
 \subsection{The Game System}
 There are many physics simulation libraries for game, however, our game needs to detect intersected branch pairs, thus collision detection with physics engines is overkill for our browser game.
-%Our game is running on browsers with rich 
+%Our game is running on browsers with rich
 Also, branches have free-form concave shapes, thus further geometric preparation such as convex decomposition is necessary for using these libraries.
 For fast and robust intersection detection, our game extensively uses down-sampled skeletons of branches.
 
 Hubbard and Philip developed collision detection by representing an object with hierarchical 3D spheres aligned on a skeleton \cite{Hubbard:1996:APS:231731.231732}.
-Our game takes similar approach but limited in 2D, but more focused on searching fabricatable joints.
+Our game takes similar approach but limited in 2D.
+Instead, we put more emphasis on searching fabricatable joints.
 In the game, down-sampled skeletons are used to find the pair of closest skeleton points between two branches.
 While a branch is selected, the system searches the closest skeleton point of the selected branch with other skeletons of available branches.
 If the distance of a pair of the closest skeleton points is smaller than a threshold, the pair is intersected.
@@ -67,8 +55,8 @@ Together with the color-code, the score update guides the user to form a feasibl
 \label{sec:joint}
 Joint is the essential entity not only in the game but also in the fabrication process of customized lapped joints.
 Importantly, each pair of branches must have one flipped branch for fabrication constraint (Section \ref{sec:fabrication}).
-Figure~\ref{fig:joint_condition} illustrates valid and invalid joint conditions.
-Our joint takes only crossed pair because they are structurally stable, relatively simple to fabricate, and creates diverse designs (Figure~\ref{fig:joint_condition}.1). 
+Together with this constraint, we set several valid and invalid contraints illustrated in Figure~\ref{fig:joint_condition}.
+Our joint takes only crossed pair because they are structurally stable, relatively simple to fabricate, and creates diverse designs (Figure~\ref{fig:joint_condition}.1).
 Due to fabrication process with CNC milling, we do not take conditions such as terminal connection, joint at metal fixture, and T-shaped connection (Figure~\ref{fig:joint_condition}.3, \ref{fig:joint_condition}.4, and \ref{fig:joint_condition}.5 respectively) .
 A valid joint's angle stays within a fixed range (Figure~\ref{fig:joint_condition}.1 and 2).
 Valid and invalid joints are displayed with green and red respectively.
@@ -85,16 +73,16 @@ Valid and invalid joints are displayed with green and red respectively.
 
 
 To describe the joint update process, let each branch $b_i$ be a member of a set of the branches $\mathcal{B}$ dropped inside of the target frame by a user.
-The user freely choose $\mathcal{B} \in \mathcal{B_\text{plate}}$, where $\mathcal{B_\text{plate}}$ is the branches fixed on a selected plate, denoted as $\mathcal{B_\text{plate}}$.
-Note that we accept one joint with a pair of branches, but a branch can have multiple joints with other branches. 
+The user freely selects $\mathcal{B} \in \mathcal{B_\text{plate}}$, where $\mathcal{B_\text{plate}}$ is the branches fixed on a selected plate.
+Note that we accept one joint with a pair of branches, but a branch can have multiple joints with other branches.
 The process starts from the selected branch $b_i$ and updates joint conditions of the selected branch with paired branches.
-When an intersected pair is detected, it stores $j$-th joint $j_{i, j}$ in $b_i$ with joint conditions (Figure~\ref{fig:joint_condition}).
+When an intersected pair is detected, it stores $j$-th joint $j_{i, j}$ in $b_i$ as joint conditions.
 After evaluation, as in Figure \ref{fig:joint_condition},  we have joints labeled as valid or invalid.
 When a branch $b_i$ is connected to one of target points $t_j \in \mathcal{T}$, the target point $t_{i, j}$ is stored in $b_i$.
 Note that we also take one target point per branch.
 The branch connected to the target point is trimmed at the target point.
 The trimmed length $l_{\text{trim}, i}$ is stored in $b_i$ and use as a penalty for score calculation.
-In this way, the user tries to position the branch as inside of the frame as possible. 
+In this way, the user tries to position the branch as inside of the frame as possible.
 This process is iteratively executed while a user is positioning a branch while dragging.
 
 
@@ -112,30 +100,18 @@ This process is iteratively executed while a user is positioning a branch while 
 
 \subsubsection{Group Condition}
 
-After a user finishes positioning a branch, the system evaluates group conditions.
+After a user finishes positioning a branch, the system groups a set of connected branches together.
+% For detail procedure of this process, please refer Appendix 1.
 Firstly it updates groups, and then detects invalid group conditions, as well as connections to target points.
-If a branch is connected to a target point, colors of the branch and its belonging group are updated, guiding users the validity of their layouts.
+If a branch is connected to a target point, colors of the branch and its belonging group are updated, informing users about the validity of their layouts.
 When a group bridges a pair of target points, a special score is added and displayed with an animation.
 
-The group update process is described as follows.
-Each time the process is called, firstly it initializes a set of groups denoted as $\mathcal{G}$.
-Iterating $b_i \in \mathcal{B}$, the first group $g_0 \in \mathcal{G}$ is created and $g_0$ stores $b_0$.
-In the iteration, the process checks connections of a branch $b_i$ with all the existing groups $ g_j \in \mathcal{G}$.
-If $b_i$ is connected to $g_j$, $g_j$ is stored in a list of connected groups, denoted as $C_i$.
-After collecting all the connected groups with $b_i$, we evaluates $C_i$.
-If $C_i$ does not have any stored group, then a new group $g$ storing $b_i$ is created and added to $\mathcal{G}$.
-If $C_i$ is not empty, then it also creates a new group $g$, but puts all the groups $g_j \in C_i$ to $g$, then adds $g$ to $\mathcal{G}$.
-Finally groups $g_j \in C_i$ are removed from $\mathcal{G}$.
-Iterating all $b_i \in \mathcal{B}$, we acquire the updated group condition.
-
 After updating the group, the process evaluates the connections with target points.
-If $b_i \in g_k \in \mathcal{G}$ has a connection with a target point, the target point is stored in the group $g_k$.
+Denoting a group and a set of groups as $g_k$ and $\mathcal{G}$ respectively, we check each branch $b_i \in g_k \in \mathcal{G}$ whether it has a connection with a target point or not. If it has, the target point is stored in the group $g_k$.
 If multiple groups with target points for each exist, the entire structure is feasible, however, these groups should be connected together (Figure \ref{fig:group} middle).
 If the group does not have any target point, the group is labeled as \textit{Islanded}, which is structurally infeasible thus counted as a penalty in the cost calculation (Figure \ref{fig:group} right).
 If the group has multiple target points, these target points are bridged.
 The game completes when the number of $\mathcal{G}$ is one, and all the target points are connected with the group, which does not have branches with invalid joints.
-The group update process is described in Algorithm \ref{al:connection}.
-%The entire flowchart of the joint update process as well as the group update process are illustrated in Figure \ref{fig:system_flowchart}.
 
 \begin{figure}[ht]
   \begin{center}
@@ -145,61 +121,19 @@ The group update process is described in Algorithm \ref{al:connection}.
   \end{center}
 \end{figure}
 
-\begin{algorithm}
-  \caption{Group Condition Update Algorithm}
-  \begin{algorithmic}[1]
-    \Function{UpdateGroups}{$\mathcal{B}$}
-    \State{Reset all the groups $\mathcal{G}$ }
-    \State{Create new group $g_0$}
-    \State{$g_0$.adds $\left( b_0 \right) $}
-%    \If{$b_0$.contains$\left( t_i \in \mathcal{T} \right) $ }
-%      \State{$g_0$.adds$\left(t_i \right) $}
-%    \EndIf
-    \State{$\mathcal{G}$.adds$\left( g_0 \right) $ }
-
-    \For{each branch $b_i \in \mathcal{B}$ except $b_0$}
-    \State{\textit{initiate a list of connected group} $C_i$}
-      \For{each group $g_j \in \mathcal{G}$}
-          \If{ $g_j$.contains$ \left( b_i \right)$}
-            \State{ $C_i$.add$\left( g_j \right) $}
-          \EndIf
-      \EndFor
-      
-  	\State{Create new group $g$}
-	\If{$C_i$.hasMember}
-		\For{each group $g_j \in  C_i$}
-			\For{each branch $b_k \in g_j$}
-%				\If{$g$.contains$\left( b_k \right) =false$}
-						\State{$g$.adds$\left(b_k \right) $}
-%				\EndIf
-			\EndFor
-		\EndFor
-		\For{each group $g_j \in  C_i$}
-			\State{$\mathcal{G}$.removes$\left(g_j \right) $}
-		\EndFor
-
-	\EndIf
-	\State{$g$.adds$\left(b_i \right) $}
-	\State{$\mathcal{G}$.adds$\left( g \right) $ }
-	\EndFor
-  \EndFunction
-  \end{algorithmic}
-  \label{al:connection}
-\end{algorithm}
-
 \subsubsection{Score Calculation}
-We calculate the score with weighted sum of following entities: the numbers of valid and invalid joints on each branch as N($\mathcal{J}_{\text{valid},i}$) and  N($\mathcal{J}_{\text{invalid},i}$) respectively, the number of groups as $N(\mathcal{G} )$, the number of islanded groups as $N(g_{\text{islanded}})$, the number of bridged target points as $N(t_{\text{bridged}, i})$.
-The trimmed length $l_{\text{trim}, i}$ in each $b_i \in \mathcal{B}$
+We calculate the score with weighted sum of following entities: the numbers of valid and invalid joints on each branch as $N$($\mathcal{J}_{\text{valid},i}$) and  $N$($\mathcal{J}_{\text{invalid},i}$) respectively, the number of groups as $N(\mathcal{G} )$, the number of islanded groups as $N(g_{\text{islanded}})$, the number of bridged target points as $N(t_{\text{bridged}, i})$.
+The trimmed length $l_{\text{trim}, i}$ in each $b_i \in \mathcal{B}$.
 The score is weighted sum of these joint and group conditions, denoted in Equation (\ref{eq:score}).
-The weights $w_1 \dotso  w_5$ are non-negative weight coefficients pre-adjusted in advance by authors.
+The weights $w_1 \dotso  w_5$ are non-negative weight coefficients pre-adjusted in advance by the authors.
 
 
-\begin{equation} 
+\begin{equation}
  \begin{aligned}
  Score =  &\; w_1\;  \sum_{1}^{N(\mathcal{B})} N(\mathcal{J}_{\text{valid},i})\; +  \;w_2\; \sum_{1}^{N(\mathcal{B})} N(\mathcal{J}_{\text{invalid},i})\\
 		+ &\; w_3\;  N(g_{\text{islanded}} \in \mathcal{G} )\;				 	 \;+  \;w_4\;  N(t_{\text{bridged}, i}) \; +  \;w_5\; \sum_{1}^{N(\mathcal{B})} l_{\text{trim}, i}
  \\
-   \textrm{s.t.} \; w_j  \geq  &\;0 \; \forall j \in 1, \dotsc , 5 
+   \textrm{s.t.} \; w_j  \any \math{R} & \; \forall j \in 1, \dotsc , 5
  \end{aligned}
  \label{eq:score}
 \end{equation}

@@ -1,7 +1,7 @@
 \section{Case Study}
 \label{sec:casestudy}
 A design and fabrication workshop was organized to examine the feasibility of our system with a specific design target and a location.
-Prior to the workshop, we have adjusted the weights in Equation \ref{eq:score} manually to ensure that the feasibility of layouts is correlating to the scores (Figure \ref{fig:testlayouts}). 
+Prior to the workshop, we have adjusted the weights in Equation \ref{eq:score} manually to ensure that the feasibility of layouts is correlating to the scores (Figure \ref{fig:testlayouts}).
 Through adjusting the game setting, we have built six target frames.
 
 
@@ -37,7 +37,7 @@ and we used \textit{MongoDB} \footnote{MongoDB is a free and open-source cross-p
 \subsubsection*{Branch collection}
 The participants were asked to collect branches with 20 - 100 $mm$ in diameter.
 The lower bound was for the milling bit size, and the upper bound was for the limited length of z-stroke of the CNC router.
-The collected branches were cut in arbitrary lengths, not longer than 500 $mm$ due to the limit of scanning area. 
+The collected branches were cut in arbitrary lengths, not longer than 500 $mm$ due to the limit of scanning area.
 As our game system and fabrication process take 3D branch shapes as 2D contours (with limited use of point cloud), we removed branches with large 3D twists.
 The diameter and length constraints worked as guidelines for participants rather than restricting finding and cutting arbitrary branches.
 The number of available branches per plate was different depending on branch sizes.
@@ -68,12 +68,12 @@ They had difficulties with mobile touch interface, such as rotation and flipping
 One participant switched to play by a PC for more precise control due to the problem.
 Interestingly, all the participants chose to develop their own designs from scratch, although we have explained they can start with an existing design and modify it.
 
-We had several requests from participants regarding the game interface but also related to the workshop organization. 
+We had several requests from participants regarding the game interface but also related to the workshop organization.
 Several participants requested to allow multiple branch plates for designing a frame, or even remove the target frame and let them freely design with branches.
 Also one participant requested additional buttons for mobile touch interface, such as to keep an active branch selected.
 %A participant with four years old failed to complete any frame.
 %He insisted on accepting his design to be fabricated
-A participant who built a plate with three branches spent most of the time with the plate. 
+A participant who built a plate with three branches spent most of the time with the plate.
 %This was because the game rule was not fully instructed.
 We accepted a layout of the plate with three branches, due to the participant's strong request.
 %We took them as positive inputs to validate our participatory (architectural) design approach.
@@ -90,7 +90,7 @@ We accepted a layout of the plate with three branches, due to the participant's 
 %After completing to bridge all the target points, the design is automatically uploaded to the database, but the use can continue to design.
 
 
-\subsubsection*{Global Design Consensus and Fabrication} 
+\subsubsection*{Global Design Consensus and Fabrication}
 As the target frame selection page could display all the layout designs, we could get an overview of design options.
 The layout designs were displayed in the descending order of scores with limited numbers (the top three highest scores for each target frame), we could easily find feasible layout designs with almost all the target points were bridged.
 As participants were excited by seeing their branches and designs, we accepted two invalid layouts and one plate which did not have enough branches for the global design.
@@ -157,12 +157,12 @@ We set the weight coefficients in Equation \ref{eq:score} as follows.
 	\end{tabulary}
 	\label{tab:weights}
 \end{center}
-Figure \ref{fig:testlayouts} shows 32 example layouts designed by authors prior to the workshop to see the correlation between scores and layouts.
+Figure \ref{fig:testlayouts} shows 32 example layouts designed by the authors prior to the workshop to see the correlation between scores and layouts.
 
 \begin{figure}[ht]
 	\begin{center}
 		\includegraphics[width = 0.4\paperwidth]{images/fabrication/designs_score.png}
-		\caption{Example layouts by authors in score-descending order. The highest score is top-left and the lowest score is bottom-right.}
+		\caption{Example layouts by the authors in score-descending order. The highest score is top-left and the lowest score is bottom-right.}
 		\label{fig:testlayouts}
 	\end{center}
 \end{figure}
@@ -185,12 +185,11 @@ Average score was 2018.1, average time spent per layout was 71.4 $seconds$, and 
 \end{figure}
 
 \subsubsection*{Fabrication}
-During the 
 We observed most of scanned models had occluded regions between plates and branches, which created interpolated faces after surface reconstruction by iSense application, resulting in outwardly offsetted contours. After milling was finished and when branches were assembled, six pairs of branches were loosely connected because the calculated contours were 2-3 $mm$ eroded than the actual sizes.
 We avoided this problem by trimming branches from 2-5 $mm$ higher than the plate surface.
 After this operation, the rest of connections were tightly connected. \\
 
-We also observed that many milling paths were 5-10 $mm$ off from the center of planned joints.
+We also observed that many milling paths were 5-10 $mm$ off from where they were planned.
 Multiple reasons could be considered as reasons such as,
 
 \begin{itemize}
@@ -199,13 +198,11 @@ Multiple reasons could be considered as reasons such as,
   \item{misaligned orientation of the plate compared to the scanned model}
 \end{itemize}
 
-To avoid the misalignments, we modified the \textit{G-Code Generator} so that an operator can freely adjust the absolute origin of the generated milling paths.
-The origin was usually set with around the center of the plate.
-After this modification, the misalignment from joint center was reduced with 5 $mm$ off at the maximum misalignment.
-Branches could absorb 3-5 $mm$ misaligned joint positions due to the elasticity of branches, and solidifying the structure with residual stresses from misalignments.
+To avoid the misalignments, we modified the \textit{G-Code Generator} so that an operator can freely adjust the absolute origin of generated milling paths per plate.
+Before the modification, an origin was set at the bottom left corner of plates.
+After the modification, it became easier to reset the origin in case of large misalignments, however, the origin set at the center of plate was good enough for our purpose.
+After this modification, misalignments stayed within 3 $mm$.
+Branches could absorb 3-5 $mm$ misaligned joint positions due to the elasticity of branches, which also solidifies the structure.
+ % with residual stresses from the misalignments.
 % The misaligned joint positions worked as post-tensions, solidifying the structure.
 % We assume that this is only applicable when an applied bending moment and cut surface at a joint is orthogonal or not too much off from orthogonal. \todo{this sentence}
-
-
-
-
