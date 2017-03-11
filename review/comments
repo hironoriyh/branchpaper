@@ -1,0 +1,166 @@
+Question 	Response
+Submission Information:
+Id: 	papers_0542
+Title: 	Participatory Architectural Design and Fabrication with Natural Materials in Native Forms
+Reviewer #27:
+  1) Description 	This paper outlines a workflow and implementation for designing architectural elements using naturally occuring materials. Specifically, it outlines a system for designing a fence made out of branches. The workflow proceeds in distinct phases. First, natural elements (in this case branches) are harvested from the wild and 3D scanned. Then, a user or multiple users use an application in which they can arrange the natural material elements in a design. As they are arranging the elements, the user is given feedback on whether the design satisfies certain constraints. The user can adjust this pattern until it satisfies all constraints and the user is happy with the design. In the next phase, the arrangement is used to drive a digital fabrication device (in this case a CNC mill) to make the necessary modifications to the natural elements to carry out the intended design. Finally, the elements are assembled into the goal design.
+
+The overall goal of the paper is to show how digital technology can enable workflows that make it easier to integrate natural elements into construction.
+  2) Resubmission Evaluation
+  3) Clarity of Exposition 	The English needs some work but is intelligible.
+  4) Quality of References 	References seem adequate though I haven't been in the field for a while.
+  5) Reproducibility 	Yes, the system could be reproduced.
+  6) Rating 	2.0
+  8) Explanation of Rating 	The motivations for this project seem more artistic than technical, and the implementation does not seem to break new ground in terms of algorithms. If there was less related work on accessible interfaces for creating designs for digital fabrication, I would be more inclined to view the interface as the major novelty of the paper. However, given the existing body of work, I don't think this is technically novel enough to warrant presentation at SIGGRAPH.
+
+Reviewer #16:
+  1) Description 	This paper presents a tool for creating human-made architectural structures made of wooden branches. The tool is presented as a game where participants collect branches, scan them and upload them to a database, choose a part of the structure to replicate (target frame) and interactively manipulate the representations of a subset of the uploaded branches in order to fit the target frame. The designed structure corresponding to the frame is eventually processed and joint geometries, to be carved by a CNC milling machine, are generated.
+
+The idea behind this work, i.e. guiding casual users to collectively build complex assemblies, is certainly valuable and this paper might have contributions regarding social, user-interaction and maybe architectural aspects. However, from a technical point of view, this work does not bring much and I don’t think it solves the initial goal of alleviating the require expertise when designing architectural assemblies in a satisfactory manner.
+  2) Resubmission Evaluation 	It seems that this work has been incorrectly labeled as a resubmission, or if it was indeed the case, that the provided id for the previous submission was incorrect.
+  3) Clarity of Exposition 	The exposition is generally clear. The points to clarify are listed below:
+- l.211: I didn’t understand what the metal fixtures were referring to before watching the video. Please explain what this is in the text itself. Also, why are they necessary? It is only to be able to rotate the plate and facilitate the scanning process?
+- Section 3.1.1is unclear. What is the difference the calligraphic B and B_plate? I didn’t understand how a connection between 2 branches was matched to a particular target joint. Do you use the position of the intersection between the two branches? What do you mean by “trimming” a branch?
+- l.428: This is not a sentence.
+-l.473: I guess that you meant positive values for all the listed weights?
+  4) Quality of References 	References are ok.
+  5) Reproducibility 	The steps are well described at a high-level but additional details should be provided. In particular:
+- how exactly are the contours of the branches extracted?
+- how exactly are the skeleton points extracted from the contours?
+- What criteria did the authors use to evaluate how well a given score fitted a certain layout?
+  6) Rating 	2.5
+  8) Explanation of Rating 	The idea behind this work is interesting but I am not sure that it fits ideally the Siggraph audience.
+More specifically, from a technical point of view, I don’t think that the contribution of this work is enough since it relies on very standard components .
+On a higher level, my main complaint is that this system still relies on experts to decompose the target structure into feasible target frames. How the different target frames are reconciled to create the final structure is not discussed at all. In the end, the result is quite disappointing since what the system allowed to do turned out to be assemblies made of 4 branches at most.
+
+Reviewer #55:
+  1) Description 	This paper presents a system that allows users to design and fabricate connected 2D network of sticks (a 2D fence), whereas the individual elements are tree branches.
+
+The system provides the following workflow: First, sticks are collected, their shape is scanned, and they are added to a database. During the design, users can place sticks virtually to create a network. The system checks for feasible connection configurations and also provides a matching score evaluating the quality of a design. Then, connectors are created using a milling machine, and the fence is assembled manually.
+
+I am not sure if the presented technique is really robust enough to design objects the are stable enough to be used in an architectural context. The main contribution of this paper is more a vision for a workflow, an early prototype, and a small user study where natural materials and a simple design process are used to create an object.
+  2) Resubmission Evaluation
+  3) Clarity of Exposition 	It is not entirely clear for me why the design stage is a game. Also, the collaborative aspect remains unclear.
+  4) Quality of References 	References seem to be adequate.
+  5) Reproducibility 	While the general concept is reproducible, the paper is quite vague about several technical details. For example, how is the skeleton exactly extracted?
+
+What interaction modes are offered in the game, what interactions are necessary to resolve invalid joints?
+  6) Rating 	2.8
+  8) Explanation of Rating 	I like this work because it is based on a very appealing concept. I like the idea of being able to build up a database of available build material (in this case tree branches) and then using it in an intuitive way to design a larger-scale object. I also appreciate the user study and the demonstration of the concept. I believe the work will have interesting application in the future.
+
+However, the concept itself is not entirely novel and probably inspired based on an idea presented in [Schindler et al. 2014]. In this work, a process was developed to create a formal grid structure from tree branches through "mapping and capturing Y-Shape branches in 2D and further working with them as outlined silhouettes to explore their potentials as elements in
+a grid based structures." So the core novelty is the overall system and the idea of using an online game-based approach to participatory design.
+
+Some clarifications are needed about the collaborative aspect. There seems to be little interaction between the fields. Looking at the final result in Figure 1, it seems that a wooden frame is needed to hold the final result in place (the upper row - fields 1,2,3,4 - and the lower row - field 5, 6, 7, 8 - are only connected between field 4 and 8. This might not be sufficient for being structurally stable). Therefore, I am not sure if the presented interaction technique works that well.
+
+I am also wondering about the intuitiveness of the presented score. Why is it a good choice? Do the users understand what the score means? It mixes several components together and it might be hard to understand how to improve it. Would the system work equally well without the score?
+
+How much post-processing of the game results is needed in the g-code generator? Were the changes made by an expert or the kids that participated in the user study?
+
+Another weakness of the paper is the lack of a precise description of some technical contribution for computer graphics or interactive techniques. The applied techniques (3D scanning, checking of the feasibility of connectors, simple geometric checks for the validity of the design) are not new and also not sufficient for guaranteeing a result that was generated will really work in practice.
+
+Reviewer #90:
+  1) Description 	This paper presents a workflow to design and fabricate customized architectural elements with branches in their naive forms. Three major stages are involved in the workflow, namely scanning branches, playing game of connecting the branches, and fabricating and assembling the branches. The developed technique sounds interesting, and workable in some sense. Yet, the architecture that can be fabricated with the technique is restricted to rather limited 2D cases. The usability of the techniques is also questionable as the fabricated result (i.e., 2D fence) in the case study cannot be used in practice.
+  2) Resubmission Evaluation 	The previous submission ID (to SIGGRAPH 2015) seems incorrect as the downloaded submission has been published successfully.
+  3) Clarity of Exposition 	The paper structure is easy to follow, but the exposition and English can be improved.
+Line 332: I did not find Appendix 1 at the end of the paper, please amend it.
+  4) Quality of References 	The authors claimed that the customized non-orthogonal joint as a key contribution, yet the relevant references are missing such as:
+
+Schwartzburg et al. Fabrication-aware Design with Intersecting Planar Pieces. Eurographics 2013.
+
+Cignoni et al. Field-aligned mesh joinery. ACM Transactions on Graphics. 2014.
+  5) Reproducibility 	I think the techniques are mostly reproducible.
+  6) Rating 	2.2
+  8) Explanation of Rating 	Although this submission presents an interesting way for architectural design and the accompanying video is very nice, I felt it is not ready for publication due to the following reasons.
+
+First, the motivation of this work needs to be clarified. Instead of using the proposed complicated technique, a group of people can also build an architecture (e.g., a fence) by looking for branches and connecting them using nails. This common method will also make use of natural materials in native forms and allow a number of participants to get involved. I felt the results fabricated with this common method will have a higher chance to be used in practice since nailing would provide higher connection strength than the proposed joints.
+
+Second, the contribution of this work is limited. To me, the most interesting part is the game-based approach that gets humans involved to design a branch layout with some guidance. The customized non-orthogonal joint is not a new concept as it has been explored in several previous works (see the References section again), although fabricating the non-orthogonal joints with CNC milling sounds new to me.
+
+Third, the proposed technique can fabricate only limited kinds of real architectures, mainly 2D cases. This is because the branch layout is restricted to be on top of a 2D plate, and the game-based design approach is also limited to 2D virtual space. I suggest the authors considering more challenging design cases, e.g., using branches to build 3D architectures such as shelters or stretchers.
+
+Lastly, the case study seems an incomplete work. When I saw the last sentence in the Abstract (“fabricate a 2D fence with our system”), I expected to see a real fence that can stand and be used. However, after reading the whole paper, I realized the only results are the elements (i.e., branch layouts) to be used as the building blocks of a fence. The workflow did not consider connecting different branch layouts to form an integrated structure, which I think is a missing component for the design and fabrication process.
+
+Reviewer #83:
+  1) Description 	This paper describes an approach to fabricating objects that make use
+of natural forms -- specifically tree brnaches. The idea is to collect
+the branches, scan them, let users design how they join together in a
+game interface and then use a milling machine to mill the joints for
+assembly. The approach is novel contribution.
+  2) Resubmission Evaluation
+  3) Clarity of Exposition 	The algorithmic sections of the paper are described at a high level and
+the ordering of the algorithmic sections seems a bit random to me.
+  4) Quality of References 	There is a bunch of related work from SIGGRAPH and TOG on joint design
+that should be referenced.
+
+@inproceedings{xin2011making,
+title={Making burr puzzles from 3D models},
+author={Xin, Shiqing and Lai, Chi-Fu and Fu, Chi-Wing and Wong, Tien-Tsin and He, Ying and Cohen-Or, Daniel},
+booktitle={ACM Transactions on Graphics (TOG)},
+volume={30},
+number={4},
+pages={97},
+year={2011},
+organization={ACM}
+}
+
+@inproceedings{schwartzburg2013fabrication,
+title={Fabrication-aware Design with Intersecting Planar Pieces},
+author={Schwartzburg, Yuliy and Pauly, Mark},
+booktitle={Computer Graphics Forum},
+volume={32},
+number={2pt3},
+pages={317--326},
+year={2013},
+organization={Wiley Online Library}
+}
+
+@article{fu2015computational,
+title={Computational interlocking furniture assembly},
+author={Fu, Chi-Wing and Song, Peng and Yan, Xiaoqi and Yang, Lee Wei and Jayaraman, Pradeep Kumar and Cohen-Or, Daniel},
+journal={ACM Transactions on Graphics (TOG)},
+volume={34},
+number={4},
+pages={91},
+year={2015},
+publisher={ACM}
+}
+
+Also the paper is missing a reference to FoldIt and earlier work on
+games with a purpose.
+  5) Reproducibility 	At a high level the work is reproducible, but the many of the
+algorithmic details are missing and would have to be guessed at. A
+reader familiar with computer graphics could probably produce a
+similar system but it wouldn't be exactly the same.
+  6) Rating 	3.0
+  8) Explanation of Rating 	Overall I think this work introduces an interesting direction for
+computer graphics. On the other hand I don't really buy the usefulness
+of the system as it is described. So I am on the fence about the work.
+
+Positives:
+
+I think the idea of combining a scanned database of natural
+branches/forms with a game to help design structures is a new and
+interesting approach.
+
+Negatives:
+
+The structures that are generated are more like art than useful
+structures. The structural integrity of the joints is not validated
+and so it is unclear the the fabricated design would be useful as
+anything other than a sculpture (e.g. I don't think this approach
+would work to build a piece of furniture). It is not clear how the
+target joint points on the frame are chosen for the game and why those
+are useful points to connect to the frame. In fact why is the frame
+even necessary?
+
+Other issues:
+
+- The authors claim the weights should be non-negative in eqn 1 and
+then use negative weights later on.
+
+- The description of the approach and algorithms is presented in a
+haphazard order. The scanning of the branches is presented at the
+end of the paper while the initial part of Section 3.1 simply
+assumes a texture mesh model is given as input. The overall setup
+and workflow just isn't described very well.

@@ -1,0 +1,80 @@
+The exposition is generally clear. The points to clarify are listed below:
+- l.211: I didn’t understand what the metal fixtures were referring to before watching the video. Please explain what this is in the text itself. Also, why are they necessary? It is only to be able to rotate the plate and facilitate the scanning process?
+- Section 3.1.1is unclear. What is the difference the calligraphic B and B_plate? I didn’t understand how a connection between 2 branches was matched to a particular target joint. Do you use the position of the intersection between the two branches? What do you mean by “trimming” a branch?
+- l.428: This is not a sentence.
+-l.473: I guess that you meant positive values for all the listed weights?
+
+- how exactly are the contours of the branches extracted?
+- how exactly are the skeleton points extracted from the contours?
+- What criteria did the authors use to evaluate how well a given score fitted a certain layout?
+
+
+////
+How much post-processing of the game results is needed in the g-code generator? Were the changes made by an expert or the kids that participated in the user study?
+
+intuitiveness of the score
+
+simple geometric checks for the validity of the design) are not new and also not sufficient for guaranteeing a result that was generated will really work in practice.
+////
+
+Schwartzburg et al. Fabrication-aware Design with Intersecting Planar Pieces. Eurographics 2013.
+
+Cignoni et al. Field-aligned mesh joinery. ACM Transactions on Graphics. 2014.
+
+/////
+Instead of using the proposed complicated technique, a group of people can also build an architecture (e.g., a fence) by looking for branches and connecting them using nails. This common method will also make use of natural materials in native forms and allow a number of participants to get involved.
+
+although fabricating the non-orthogonal joints with CNC milling sounds new to me.
+
+
+////$RECYCLE.BIN
+@inproceedings{xin2011making,
+title={Making burr puzzles from 3D models},
+author={Xin, Shiqing and Lai, Chi-Fu and Fu, Chi-Wing and Wong, Tien-Tsin and He, Ying and Cohen-Or, Daniel},
+booktitle={ACM Transactions on Graphics (TOG)},
+volume={30},
+number={4},
+pages={97},
+year={2011},
+organization={ACM}
+}
+
+@inproceedings{schwartzburg2013fabrication,
+title={Fabrication-aware Design with Intersecting Planar Pieces},
+author={Schwartzburg, Yuliy and Pauly, Mark},
+booktitle={Computer Graphics Forum},
+volume={32},
+number={2pt3},
+pages={317--326},
+year={2013},
+organization={Wiley Online Library}
+}
+
+@article{fu2015computational,
+title={Computational interlocking furniture assembly},
+author={Fu, Chi-Wing and Song, Peng and Yan, Xiaoqi and Yang, Lee Wei and Jayaraman, Pradeep Kumar and Cohen-Or, Daniel},
+journal={ACM Transactions on Graphics (TOG)},
+volume={34},
+number={4},
+pages={91},
+year={2015},
+publisher={ACM}
+}
+
+
+Also the paper is missing a reference to FoldIt and earlier work on
+games with a purpose.
+
+It is not clear how the
+target joint points on the frame are chosen for the game and why those
+are useful points to connect to the frame. In fact why is the frame
+even necessary?
+
+- The authors claim the weights should be non-negative in eqn 1 and
+then use negative weights later on.
+
+- The description of the approach and algorithms is presented in a
+haphazard order. The scanning of the branches is presented at the
+end of the paper while the initial part of Section 3.1 simply
+assumes a texture mesh model is given as input. The overall setup
+and workflow just isn't described very well.
