@@ -1,5 +1,0 @@
-PWD C:/Users/admin/Documents/GitHub/branchpaper/texts
-INPUT c:/w32tex/share/texmf-dist/web2c/texmf.cnf
-INPUT c:/w32tex/share/texmf-dist/web2c/pdftex/pdflatex.fmt
-INPUT ./abstract.tex
-OUTPUT abstract.log

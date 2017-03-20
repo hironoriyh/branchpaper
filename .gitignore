@@ -10,3 +10,7 @@ document.aux
 document.blg
 document.synctex.gz
 document.log
+images/old_pics/
+images/taichi
+texts/abstract.aux
+texts/abstract.fdb_latexmk
