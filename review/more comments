@@ -65,8 +65,7 @@ publisher={ACM}
 Also the paper is missing a reference to FoldIt and earlier work on
 games with a purpose.
 
-It is not clear how the
-target joint points on the frame are chosen for the game and why those
+It is not clear how the target joint points on the frame are chosen for the game and why those
 are useful points to connect to the frame. In fact why is the frame
 even necessary?
 
