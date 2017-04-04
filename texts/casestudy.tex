@@ -157,7 +157,14 @@ We set the weight coefficients in Equation \ref{eq:score} as follows.
 	\end{tabulary}
 	\label{tab:weights}
 \end{center}
+
 Figure \ref{fig:testlayouts} shows 32 example layouts designed by the authors prior to the workshop to see the correlation between scores and layouts.
+We set 30 $minutes$ for playing the game, including practicing the game.
+We received 27 layouts in total from six participants.
+Participants could not complete the assigned frame with branch plates built by them in this workshop.
+The total playing time by all participants was 31.5 $minutes$.
+Five plates were completed, meaning that all the target points were bridged (Figure \ref{fig:layouts}).
+Average score was 2018.1, average time spent per layout was 71.4 $seconds$, and average click count was 48.5.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -166,15 +173,6 @@ Figure \ref{fig:testlayouts} shows 32 example layouts designed by the authors pr
 		\label{fig:testlayouts}
 	\end{center}
 \end{figure}
-
-
-
-We set 30 $minutes$ for playing the game, including practicing the game.
-We received 27 layouts in total from six participants.
-Participants could not complete the assigned frame with branch plates built by them in this workshop.
-The total playing time by all participants was 31.5 $minutes$.
-Five plates were completed, meaning that all the target points were bridged (Figure \ref{fig:layouts}).
-Average score was 2018.1, average time spent per layout was 71.4 $seconds$, and average click count was 48.5.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -190,14 +188,7 @@ We avoided this problem by trimming branches from 2-5 $mm$ higher than the plate
 After this operation, the rest of connections were tightly connected. \\
 
 We also observed that many milling paths were 5-10 $mm$ off from where they were planned.
-Multiple reasons could be considered as reasons such as,
-
-\begin{itemize}
-  \item{deformation of mechanical parts of the CNC router}
-  \item{not dense resolution of acquired contours of branches}
-  \item{misaligned orientation of the plate compared to the scanned model}
-\end{itemize}
-
+Multiple reasons could be considered as follows: 1. deformation of mechanical parts of the CNC router. 2. not dense resolution of acquired contours of branches. 3. misaligned orientation of the plate compared to the scanned model.
 To avoid the misalignments, we modified the \textit{G-Code Generator} so that an operator can freely adjust the absolute origin of generated milling paths per plate.
 Before the modification, an origin was set at the bottom left corner of plates.
 After the modification, it became easier to reset the origin in case of large misalignments, however, the origin set at the center of plate was good enough for our purpose.
