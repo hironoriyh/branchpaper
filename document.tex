@@ -150,59 +150,60 @@ with Natural Materials in Native Forms
 \bibliographystyle{acmsiggraph}
 \nocite{*}
 \bibliography{references}
-%
-\appendix
-\Section{Group Update process}
-The group update process is described as follows.
-Each time the process is called, firstly it initializes a set of groups denoted as $\mathcal{G}$.
-Iterating $b_i \in \mathcal{B}$, the first group $g_0 \in \mathcal{G}$ is created and $g_0$ stores $b_0$.
-In the iteration, the process checks connections of a branch $b_i$ with all the existing groups $ g_j \in \mathcal{G}$.
-If $b_i$ is connected to $g_j$, $g_j$ is stored in a list of connected groups, denoted as $C_i$.
-After collecting all the connected groups with $b_i$, we evaluates $C_i$.
-If $C_i$ does not have any stored group, then a new group $g$ storing $b_i$ is created and added to $\mathcal{G}$.
-If $C_i$ is not empty, then it also creates a new group $g$, but puts all the groups $g_j \in C_i$ to $g$, then adds $g$ to $\mathcal{G}$.
-Finally groups $g_j \in C_i$ are removed from $\mathcal{G}$.
-Iterating all $b_i \in \mathcal{B}$, we acquire the updated group condition.
 
-\begin{algorithm}
-  \caption{Group Condition Update Algorithm}
-  \begin{algorithmic}[1]
-    \Function{UpdateGroups}{$\mathcal{B}$}
-    \State{Reset all the groups $\mathcal{G}$ }
-    \State{Create new group $g_0$}
-    \State{$g_0$.adds $\left( b_0 \right) $}
-%    \If{$b_0$.contains$\left( t_i \in \mathcal{T} \right) $ }
-%      \State{$g_0$.adds$\left(t_i \right) $}
-%    \EndIf
-    \State{$\mathcal{G}$.adds$\left( g_0 \right) $ }
 
-    \For{each branch $b_i \in \mathcal{B}$ except $b_0$}
-    \State{\textit{initiate a list of connected group} $C_i$}
-      \For{each group $g_j \in \mathcal{G}$}
-          \If{ $g_j$.isConnectedTo$ \left( b_i \right)$}
-            \State{ $C_i$.add$\left( g_j \right) $}
-          \EndIf
-      \EndFor
+ \appendix
+ \section{Group Update process}
+ The group update process is described as follows.
+ Each time the process is called, firstly it initializes a set of groups denoted as $\mathcal{G}$.
+ Iterating $b_i \in \mathcal{B}$, the first group $g_0 \in \mathcal{G}$ is created and $g_0$ stores $b_0$.
+ In the iteration, the process checks connections of a branch $b_i$ with all the existing groups $ g_j \in \mathcal{G}$.
+ If $b_i$ is connected to $g_j$, $g_j$ is stored in a list of connected groups, denoted as $C_i$.
+ After collecting all the connected groups with $b_i$, we evaluates $C_i$.
+ If $C_i$ does not have any stored group, then a new group $g$ storing $b_i$ is created and added to $\mathcal{G}$.
+ If $C_i$ is not empty, then it also creates a new group $g$, but puts all the groups $g_j \in C_i$ to $g$, then adds $g$ to $\mathcal{G}$.
+ Finally groups $g_j \in C_i$ are removed from $\mathcal{G}$.
+ Iterating all $b_i \in \mathcal{B}$, we acquire the updated group condition.
 
-  	\State{Create new group $g$}
-	% \If{$C_i$.hasMember}
-		\For{each group $g_j \in  C_i$}
-			\For{each branch $b_k \in g_j$}
-%				\If{$g$.contains$\left( b_k \right) =false$}
-						\State{$g$.adds$\left(b_k \right) $}
-%				\EndIf
-			\EndFor
-		\EndFor
-		\For{each group $g_j \in  C_i$}
-			\State{$\mathcal{G}$.removes$\left(g_j \right) $}
-		\EndFor
-	% \EndIf
-	\State{$g$.adds$\left(b_i \right) $}
-	\State{$\mathcal{G}$.adds$\left( g \right) $ }
-	\EndFor
-  \EndFunction
-  \end{algorithmic}
-  \label{al:connection}
-\end{algorithm}
+ \begin{algorithm}
+   \caption{Group Condition Update Algorithm}
+   \begin{algorithmic}[1]
+     \Function{UpdateGroups}{$\mathcal{B}$}
+     \State{Reset all the groups $\mathcal{G}$ }
+     \State{Create new group $g_0$}
+     \State{$g_0$.adds $\left( b_0 \right) $}
+ %    \If{$b_0$.contains$\left( t_i \in \mathcal{T} \right) $ }
+ %      \State{$g_0$.adds$\left(t_i \right) $}
+ %    \EndIf
+     \State{$\mathcal{G}$.adds$\left( g_0 \right) $ }
+
+     \For{each branch $b_i \in \mathcal{B}$ except $b_0$}
+     \State{\textit{initiate a list of connected group} $C_i$}
+       \For{each group $g_j \in \mathcal{G}$}
+           \If{ $g_j$.isConnectedTo$ \left( b_i \right)$}
+             \State{ $C_i$.add$\left( g_j \right) $}
+           \EndIf
+       \EndFor
+
+   	\State{Create new group $g$}
+ 	% \If{$C_i$.hasMember}
+ 		\For{each group $g_j \in  C_i$}
+ 			\For{each branch $b_k \in g_j$}
+ %				\If{$g$.contains$\left( b_k \right) =false$}
+ 						\State{$g$.adds$\left(b_k \right) $}
+ %				\EndIf
+ 			\EndFor
+ 		\EndFor
+ 		\For{each group $g_j \in  C_i$}
+ 			\State{$\mathcal{G}$.removes$\left(g_j \right) $}
+ 		\EndFor
+ 	% \EndIf
+ 	\State{$g$.adds$\left(b_i \right) $}
+ 	\State{$\mathcal{G}$.adds$\left( g \right) $ }
+ 	\EndFor
+   \EndFunction
+   \end{algorithmic}
+   \label{al:connection}
+ \end{algorithm}
 
 \end{document}

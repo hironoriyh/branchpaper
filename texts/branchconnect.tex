@@ -133,7 +133,7 @@ The weights $w_1 \dotso  w_5$ are non-negative weight coefficients pre-adjusted 
  Score =  &\; w_1\;  \sum_{1}^{N(\mathcal{B})} N(\mathcal{J}_{\text{valid},i})\; +  \;w_2\; \sum_{1}^{N(\mathcal{B})} N(\mathcal{J}_{\text{invalid},i})\\
 		+ &\; w_3\;  N(g_{\text{islanded}} \in \mathcal{G} )\;				 	 \;+  \;w_4\;  N(t_{\text{bridged}, i}) \; +  \;w_5\; \sum_{1}^{N(\mathcal{B})} l_{\text{trim}, i}
  \\
-  %  \textrm{s.t.} \; w_j  \any \math{R} & \; \forall j \in 1, \dotsc , 5
+   \textrm{s.t.} & \; w_j  \in \mathbb{R} \; \wedge \;   \forall j \in 1, \dotsc , 5
  \end{aligned}
  \label{eq:score}
 \end{equation}
