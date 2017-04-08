@@ -48,6 +48,7 @@ The group is used for evaluating connections between target points.
 The conditions of joint and group are indicated with simple color-code.
 Once the user finishes geometric manipulation, score is updated with weighted sum of score parameters.
 Together with the color-code, the score update guides the user to form a feasible design.
+Please find an overview of the game  in Appendix~\ref{sec:game_flow}.
 
 
 
@@ -69,15 +70,13 @@ Valid and invalid joints are displayed with green and red respectively.
 	\end{center}
 \end{figure}
 
-To describe the joint update process, let each branch $b_i$ be a member of a set of the branches $\mathcal{B} = \{b_1, \dotsc , b_N\}$ dropped inside of the target frame by a user.
+To describe the joint update process, let each branch $b_i$ be a member of a set of the branches $\mathcal{B} = \{b_1, \dotsc , b_{Br}\}$ dropped inside of the target frame by a user.
 The user freely selects $\mathcal{B} \in \mathcal{B_\text{plate}}$, where $\mathcal{B_\text{plate}}$ is the branches fixed on a selected plate.
 Note that we accept one joint with a pair of branches, but a branch can have multiple joints with other branches.
 The process starts from the selected branch $b_i$ and updates joint conditions of the selected branch with paired branches.
 When an intersected pair is detected on a branch $b_i$, the intersection is firstly evaluated as in Figure \ref{fig:joint_condition}, and then labeled as valid joint $j_{valid}$ or $j_{invalid}$ and stored in $b_i$.
 We set the valid angle consraint as $45 \leq |\theta| \leq 145 \and $.
-%  it stores $j$-th joint $j_{i, j}$ in $b_i$ as joint conditions.
-% After evaluation, as in Figure \ref{fig:joint_condition}, we have joints labeled as valid or invalid denoted as $\mathcal{J}_{\text{valid},i} = \{j_{i,1}, \dotsc , j_{i, N_\text{valid}}\}$ and $\mathcal{J}_{\text{invalid},i} = \{j_{i,1}, \dotsc , j_{i, N_\text{invalid}}\}$ respectively.
-When a branch $b_i$ is connected to one of target points $t_j \in \mathcal{T} = \{t_1, \dotsc , t_K\}$, the target point $t_{i, j}$ is stored in $b_i$.\\
+When a branch $b_i$ is connected to one of target points $t_j \in \mathcal{T} = \{t_1, \dotsc , t_{T_{all}}\}$, the target point $t_{i, j}$ is stored in $b_i$.\\
 
 The number of target points $K$ is different on each target frame.
 Note that we also take one target point per branch.
@@ -88,11 +87,11 @@ We calculate the score of joint conditions $\mathcal{S}_{\text{joint}}$ as follo
 
 \begin{equation}
  \begin{aligned}
- \mathcal{S}_{\text{joint}} =  &\; w_1 N_{valid} + w_2 N_{invalid} + w_3 N_{target} + w_4 \sum_{i=1}^{N} l_{\text{trim}, i}
+ \mathcal{S}_{\text{joint}} =  &\; w_1 N_{valid} + w_2 N_{invalid} + w_3 N_{target} + w_4 \sum_{i=1}^{Br} l_{\text{trim}, i}
  \\
    \textrm{s.t.}
    & \; w_j  \in \mathbb{R} \; \wedge \;   \forall j \in 1, \dotsc , 4 \\
-   & \; N_{target} \leq K \in \mathbb{R}
+   & \; N_{target} \leq T_{all} \in \mathbb{R}
  \end{aligned}
  \label{eq:joint}
 \end{equation}
@@ -103,17 +102,9 @@ This process is iteratively executed while a user is positioning a branch while 
 \subsubsection{Group Condition}
 
 After a user finishes positioning a branch, the system groups a set of connected branches together.
-% For detail procedure of this process, please refer Appendix 1.
-Firstly it updates groups, and then detects invalid group conditions, as well as connections to target points.
-If a branch is connected to a target point, colors of the branch and its belonging group are updated, informing users about the validity of their layouts.
-When a group bridges a pair of target points, a special score is added and displayed with an animation.
-
-After updating the group, the process evaluates the connections with target points.
-Denoting a group and a set of groups as $g_k$ and $\mathcal{G}$ respectively, we check each branch $b_i \in g_k \in \mathcal{G}$ whether it has a connection with a target point or not. If it has, the target point is stored in the group $g_k$.
-If multiple groups with target points for each exist, the entire structure is feasible, however, these groups should be connected together (Figure \ref{fig:group} middle).
-If the group does not have any target point, the group is labeled as \textit{Islanded}, which is structurally infeasible thus counted as a penalty in the cost calculation (Figure \ref{fig:group} right).
-If the group has multiple target points, these target points are bridged.
-The game completes when the number of $\mathcal{G}$ is one, and all the target points are connected with the group, which does not have branches with invalid joints.
+For detail procedure of this process, please refer Appendix~\ref{sec:group}.
+% Firstly it updates groups, and then detects invalid group conditions, as well as connections to target points.
+After updating the group, invalid group conditions are detected as in Figure~\ref{fig:group}.
 
 \begin{figure}[ht]
   \begin{center}
@@ -123,16 +114,28 @@ The game completes when the number of $\mathcal{G}$ is one, and all the target p
   \end{center}
 \end{figure}
 
+If a branch is connected to a target point, colors of the branch and its belonging group are updated, informing users about the validity of their layouts.
+When a group bridges a pair of target points, a special score is added and displayed with an animation.
+
+After updating the group, the process evaluates the connections with target points.
+Denoting a group and a set of groups as $g_k$ and $\mathcal{G}$ respectively, we check each branch $b_i \in g_k \in \mathcal{G}$ whether it has a connection with a target point or not.
+If it has, the target point is stored in the group $g_k$.
+If there are multiple groups with target points for each group, the entire structure is valid but these groups should be connected together (Figure \ref{fig:group} middle).
+If the group does not have any target point, the group is labeled as \textit{Islanded}, which is structurally infeasible thus counted as a penalty in cost calculation (Figure \ref{fig:group} right).
+If one group has multiple target points, these target points are \textit{bridged}.
+Denoting the number of groups as $N_{group}$, the number of islanded groups as $N_{island}$, the number of bridged target points as $N_{bridged}$, the score of group conditions $\mathcal{S}_{group}$ is calculated as
+
 \begin{equation}
  \begin{aligned}
- \mathcal{S}_{\text{joint}} =  &\; w_1 N_{valid} + w_2 N_{invalid} + w_3 N_{target} + w_4 \sum_{i=1}^{N} l_{\text{trim}, i}
- \\
-   \textrm{s.t.}
-   & \; w_j  \in \mathbb{R} \; \wedge \;   \forall j \in 1, \dotsc , 4 \\
-   & \; N_{target} \leq K \in \mathbb{R}
+ \mathcal{S}_{\text{group}} =  &\; w_5 N_{island} + w_6 N_{bridged}\\
+   \textrm{s.t.} & \; w_j  \in \mathbb{R} \; \wedge \;   \forall j \in 1, \dotsc , 2 \\
+   & \; N_{bridged} \leq T_{all} \\
+   & \; N_{island} \leq Br
  \end{aligned}
- \label{eq:joint}
+ \label{eq:score}
 \end{equation}
+
+The game completes when the number of $\mathcal{G}$ is one, and all the target points are connected with the group, which does not have branches with invalid joints.
 
 
 \subsubsection{Score Calculation}
