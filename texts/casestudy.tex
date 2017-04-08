@@ -26,15 +26,15 @@ The processes were from collecting and fixing the branches on a plate, scanning 
   \end{center}
 \end{figure}
 
-\subsection{User Experiences}
-\subsubsection*{System and Hardware}
+\subsection{System and Hardware}
 We used two iPad minis with iSense depth cameras attached for scanning branches, and a 3 axis CNC milling router with a 6 mm diameter milling bit.
 We used a laptop PC for running \textit{Branch Importer} and \textit{G-Code generator}, as well as operating the milling machine.
 The scan area of iSense camera is 500 $mm$ $\times$ 500 $mm$, and the milling machine's stroke length along z-axis is 70 $mm$, which provide geometric constraints for available branch sizes.
 \textit{BranchConnect} was hosted at \textit{Heroku} cloud server \footnote{Heroku is a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud. \url{https://www.heroku.com/}},
 and we used \textit{MongoDB} \footnote{MongoDB is a free and open-source cross-platform document-oriented database program. \url{https://www.mongodb.com/}} as a cloud database.
 
-\subsubsection*{Branch collection}
+\subsection{User Experiences}
+\subsubsection*{Collecting and Scanning Branches}
 The participants were asked to collect branches with 20 - 100 $mm$ in diameter.
 The lower bound was for the milling bit size, and the upper bound was for the limited length of z-stroke of the CNC router.
 The collected branches were cut in arbitrary lengths, not longer than 500 $mm$ due to the limit of scanning area.
@@ -150,7 +150,7 @@ We set the weight coefficients in Equation \ref{eq:score} as follows.
 \begin{center}
 	\begin{tabulary}{\columnwidth}{ |C||C|C|C|C|C| }
 		\hline
-		weigths & $w_1$ & $w_2$ & $w_3$ & $w_4$ & $w_5$ \\
+		weights & $w_1$ & $w_2$ & $w_3$ & $w_4$ & $w_5$ \\
 		\hline
 		our setting & 100 & -100 & -1000 & 500 & -5 \\
 		\hline

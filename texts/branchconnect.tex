@@ -9,8 +9,8 @@ Instead we use simple geometric analysis to compute validity.
 We also assume that every fabricated joint works as a rigid joint, thus single connection is counted as stable to hold a pair of branches.
 
 The overall user experience is as follows.
-In the selection interface (Figure \ref{fig:game_interface} left), each frame comes with a set of predefined target points to be connected.
-The distribution of these target points is predefined by the system, and end users can not modify them.
+In the selection interface (Figure \ref{fig:game_interface} left), each frame comes with a set of target points to be connected.
+The distribution of these target points is predefined, and end users can not modify them.
 After a user selects a target frame and a set of branches on a plate, the user is guided to the game interface (Figure \ref{fig:game_interface} right), consisting of the frame with the target points, and the set of available branches at the bottom.
 The user picks a branch from the available set on the bottom, and drag\&drop it to the inside of the target frame.
 By selecting and dragging these dropped branches, the user searches a good 2D pose through basic direct geometric manipulations such as move, rotate, and horizontal flip (or mirror).
@@ -77,7 +77,7 @@ The user freely selects $\mathcal{B} \in \mathcal{B_\text{plate}}$, where $\math
 Note that we accept one joint with a pair of branches, but a branch can have multiple joints with other branches.
 The process starts from the selected branch $b_i$ and updates joint conditions of the selected branch with paired branches.
 When an intersected pair is detected, it stores $j$-th joint $j_{i, j}$ in $b_i$ as joint conditions.
-After evaluation, as in Figure \ref{fig:joint_condition},  we have joints labeled as valid or invalid.
+After evaluation, as in Figure \ref{fig:joint_condition},  we have joints labeled as valid or invalid denoted as \mathcal{J}_{\text{valid},i} and \mathcal{J}_{\text{invalid},i} respectively.
 When a branch $b_i$ is connected to one of target points $t_j \in \mathcal{T}$, the target point $t_{i, j}$ is stored in $b_i$.
 Note that we also take one target point per branch.
 The branch connected to the target point is trimmed at the target point.
@@ -85,17 +85,15 @@ The trimmed length $l_{\text{trim}, i}$ is stored in $b_i$ and use as a penalty 
 In this way, the user tries to position the branch as inside of the frame as possible.
 This process is iteratively executed while a user is positioning a branch while dragging.
 
-
-%\begin{figure}[h]
-%	\begin{center}
-%		\includegraphics[width = 0.35\paperwidth]{images/system/closestPointAlgorithm.pdf}
-%		\caption{Left: an overview of the game system with 1. joint update 2. group update and 3. score calculation. This process is iteratively executed while a user is exploring layout by dragging a branch. The joint update process is further illustrated in the right, and group condition update is described in Algorithm \ref{al:connection}. }
-%		\label{fig:system_flowchart}
-%	\end{center}
-%\end{figure}
-
-% well as the paired branch $b_{\text{paired},j} \in \mathcal{P}_{\text{paired},i}}$.
-
+\begin{equation}
+ \begin{aligned}
+ Score_{\text{Joint}} =  &\; w_1\;  \sum_{1}^{N(\mathcal{B})} N(\mathcal{J}_{\text{valid},i})\; +  \;w_2\; \sum_{1}^{N(\mathcal{B})} N(\mathcal{J}_{\text{invalid},i}) +
+   \;w_3\; \sum_{1}^{N(\mathcal{B})} l_{\text{trim}, i}
+ \\
+   \textrm{s.t.} & \; w_j  \in \mathbb{R} \; \wedge \;   \forall j \in 1, \dotsc , 5
+ \end{aligned}
+ \label{eq:joint}
+\end{equation}
 
 
 \subsubsection{Group Condition}

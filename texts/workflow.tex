@@ -1,13 +1,13 @@
 \section{Workflow}
 As shown in Figure \ref{fig:teaser} left, our workflow starts from physically collecting branches.
+In this section, we introduce two steps in the workflow shown in \ref{fig:teaser} left: Collecting and Scanning Branches (1 amd 2 in Figure~\ref{fig:teaser} left) and Fabrication (4 in Figure~\ref{fig:teaser} left).
+As for the game (3 in Figure~\ref{fig:teaser} left), please refer Section \ref{sec:game}.
 The collected branches are uploaded to cloud database by \textit{Branch Importer}, and served to the online game-based design application \textit{BranchConnect}.
 The game system uses skeletons for its joint detection process, which works on browsers on laptop computers or mobile touch devices.
-As shown in Figure \ref{fig:teaser} right, users can explore a global design with multiple branch layouts.
-Once the global design is fixed, designed layouts are further inspected by \textit{G-Code Generator}, which generates customized joints for CNC milling.
+As shown in Figure \ref{fig:teaser} right, users can explore a global design with various layouts designed by multiple users.
+Once layouts are selected the global design is fixed, these layouts are further inspected by \textit{G-Code Generator}, which generates customized joints for CNC milling.
 After finishing the milling process, users physically assemble branches and complete the fabrication process.
 The pipeline of the workflow is illustrated in the Figure \ref{fig:pipeline}.
-In this section, we introduce two steps in the pipeline: Digital Model Acquisition and Fabrication.
-As for the game system, please refer Section \ref{sec:game}.
 
 \begin{figure}[ht]
   \begin{center}
@@ -17,15 +17,20 @@ As for the game system, please refer Section \ref{sec:game}.
   \end{center}
 \end{figure}
 
-\subsection{Digital Model Acquisition}
-Our system takes textured mesh models as input.
+\subsection{Collecting and Scanning Branches}
+Users can collect branches and upload to the online database.
+Considering the mechanical constraints of CNC milling machine, branches are cut in certain length.
+Please refer Section~\ref{sec:casestudy} for details.
+The cut branches need to be firmly fixed to plates for milling process.
+We use metal fixtures to attach them on a plate (See Figure~\ref{fig:skeleton}).
+After attaching branches on plates, users can start scanning and acquire textured mesh model.
+We describe the scanning setup further in details in Section~\ref{sec:casestudy}.
+
 %As complete mesh model provides more robust results with 3D shapes of branches, we describe our process based on mesh model as an input.
-There are various methods and software available for scanning 3D models.
-We describe the scanning setup in Section \ref{sec:casestudy}.
 Taking mesh model with colored texture, our \textit{Branch Importer} provides functions such as object detection, skeleton extraction, branch type classification, and fixture point setting.
 The scanned result is a mesh model representing branches with a base plate.
-The system first idendifies branches by applying simple height threshold, and then applies contour detection.
-The obtained 2D contours are used for extracting skeletons and clustering verticies in the mesh model.
+The system first identifies branches by applying simple height threshold, and then applies contour detection.
+The obtained 2D contours are used for extracting skeletons and clustering vertices in the mesh model.
 Contours are triangulated and skeleton points are extracted from middle points on edges of triangles.
 These middle points are compared with top view image.
 If the point is inside of a contour, the middle point is counted as a skeleton point.
@@ -37,7 +42,7 @@ Metal fixture locations are confirmed by simple mouse-clicks and marked as inval
 The acquired information is stored in a cloud database.
 
 \begin{figure}[ht]
-  \includegraphics[width = 0.4\paperwidth]{images/importer/importer.png}
+  \includegraphics[width = 0.4\paperwidth]{images/importer/importer_2.png}
   \caption{An interface of \textit{Branch Importer}. Left: a top ortho-view image of textured mesh model. Right: Extracted skeletons are shown with blue dots. The beginning of skeletons is shown bigger dots, and the red dots are invalid points defined by a user. }
   \label{fig:skeleton}
 \end{figure}
