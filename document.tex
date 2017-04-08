@@ -24,6 +24,7 @@
 \usepackage{amsmath} % assumes amsmath package installed
 \usepackage{amssymb}  % assumes amsmath package installed
 \usepackage{algorithm}
+\usepackage{algorithmicx}
 \usepackage[noend]{algpseudocode}
 
 
@@ -178,37 +179,45 @@ with Natural Materials in Native Forms
    \caption{Group Condition Update Algorithm}
    \begin{algorithmic}[1]
      \Function{UpdateGroups}{$\mathcal{B}$}
+     \State{ \textit{// initialize group condition}}
      \State{Reset all the groups $\mathcal{G}$ }
      \State{Create new group $g_0$}
      \State{$g_0$.adds $\left( b_0 \right) $}
- %    \If{$b_0$.contains$\left( t_i \in \mathcal{T} \right) $ }
- %      \State{$g_0$.adds$\left(t_i \right) $}
- %    \EndIf
+     \If{$b_0$.contains$\left( t_i \in \mathcal{T} \right) $ }
+       \State{$g_0$.adds$\left(t_i \right) $}
+     \EndIf
      \State{$\mathcal{G}$.adds$\left( g_0 \right) $ }
 
+     \State{ \textit{// iterate all branches and joints}}
      \For{each branch $b_i \in \mathcal{B}$ except $b_0$}
-     \State{\textit{initiate a list of connected group} $C_i$}
+     \State{\textit{// initiate a list of connected group} $C_i$}
        \For{each group $g_j \in \mathcal{G}$}
-           \If{ $g_j$.isConnectedTo$ \left( b_i \right)$}
-             \State{ $C_i$.add$\left( g_j \right) $}
+           \If{ $g_j$.contains$ \left( b_i \right)$}
+             \State{ $G^\prime_i$.add$\left( g_j \right) $}
            \EndIf
        \EndFor
+       \State{ \textit{ // In case of the first group, create a new group }}
+ 	\If{ $C_i$.isEmpty}
+ 		\State{Create new group $g$}
+ 		\State{$g$.adds$\left(b_i \right) $}
+ 		\State{$\mathcal{G}$.adds$\left( g \right) $ }
 
-   	\State{Create new group $g$}
- 	% \If{$C_i$.hasMember}
- 		\For{each group $g_j \in  C_i$}
+  \State{ \textit{ // If the group doesn't belong to existing groups, create a new group }}
+ 	\Else
+ 		\State{Create new group $g^\prime$}
+ 		\State{$g^\prime$.adds$\left(b_i \right) $}
+ 		\For{each group $g_j \in  G^\prime_i$}
  			\For{each branch $b_k \in g_j$}
- %				\If{$g$.contains$\left( b_k \right) =false$}
- 						\State{$g$.adds$\left(b_k \right) $}
- %				\EndIf
+ 				\If{$g^\prime$.contains$\left( b_k \right) =false$}
+ 						\State{$g^\prime$.adds$\left(b_k \right) $}
+ 				\EndIf
  			\EndFor
  		\EndFor
  		\For{each group $g_j \in  C_i$}
- 			\State{$\mathcal{G}$.removes$\left(g_j \right) $}
+ 			\State{$\mathcal{B}$.removes$\left(g_j \right) $}
  		\EndFor
- 	% \EndIf
- 	\State{$g$.adds$\left(b_i \right) $}
- 	\State{$\mathcal{G}$.adds$\left( g \right) $ }
+ 		\State{$\mathcal{G}$.adds$\left( g \right) $ }
+ 	\EndIf
  	\EndFor
    \EndFunction
    \end{algorithmic}
