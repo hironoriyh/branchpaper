@@ -60,7 +60,7 @@ Some fabrication factors such as invalid points due to metal fixtures and flippe
 Here, we describe the process to calculate joint geometry for fabrication.
 The \textit{G-Code Generator} searches a set of four closest points on high-resolution contours (Figure \ref{fig:joint_geometry}.1).
 By trimming contours of each branch at the corner points, we get \textit{side cuts} and \textit{center cuts} (Figure \ref{fig:joint_geometry}.4).
-%Please refer Appendix 1 for details of this process.
+Please refer Appendix~\ref{sec:sidecut} for details of this process.
 \textit{Side cuts} have wedged corners for smooth assembly process.
 The depth of the \textit{center cuts} is half of the top height at the joint position from a mesh model (Figure \ref{fig:joint_geometry}.4).
 The bottom height is usually the height of the base plate, however, in case of under-cuts with incomplete mesh model, we calculate a half of the diameter from the 2D contour and subtract it from the top height.

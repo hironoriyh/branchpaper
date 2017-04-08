@@ -36,11 +36,11 @@
 
 %%% Title of your article or abstract.
 
-\title{Participatory Architectural Design and Fabrication\\
+\title{Participatory Layout Design and Fabrication\\
 with Natural Materials in Native Forms
 }
 
-\author{Hironori Yoshida\thanks{e-mail:hyoshida@hy-ma.com}   Takeo Igarashi\thanks{e-mail:takeo@acm.com}, Maria K Larsson, Masaaki Miki
+\author{Hironori Yoshida\thanks{e-mail:hyoshida@hy-ma.com}   Takeo Igarashi\thanks{e-mail:takeo@acm.com}, Maria K Larsson
  \\www.hy-ma.com, the University of Tokyo
 }
 
@@ -153,7 +153,34 @@ with Natural Materials in Native Forms
 \bibliography{references}
 
 
- \appendix
+
+\newpage
+
+\appendix
+
+\section{Intersected Contour Detection }
+
+
+\label{sec:sidecut}
+
+ \begin{figure}[h]
+ 	\begin{center}
+ 		\includegraphics[width =0.48 \paperwidth]{images/system/intersection.png}
+ 		\caption{An overview of intersected contour detection. We first detect 4 closect points and then define side lines and center lines. }
+ 		\label{fig:intersection}
+ 	\end{center}
+ \end{figure}
+
+%\teaser{
+%    \centerline{
+% 		\includegraphics[width =0.5 \paperwidth]{images/system/4points.jpg}
+% }
+% 		\caption{An overview of intersected contour detection. We first detect 4 closect points and then define side lines and center lines. }
+%
+% 		\label{fig:intersection}
+%}
+%
+
  \section{Overview of the Game}
 \label{sec:game_flow}
  \begin{figure}[h]
@@ -164,7 +191,7 @@ with Natural Materials in Native Forms
  	\end{center}
  \end{figure}
 
- \section{Group Update process}
+ \section{Group Update Process}
  \label{sec:group}
  The group update process is described as follows.
  Each time the process is called, firstly it initializes a set of groups denoted as $\mathcal{G}$.
