@@ -78,7 +78,7 @@ When an intersected pair is detected on a branch $b_i$, the intersection is firs
 We set the valid angle consraint as $45 \leq |\theta| \leq 145 \and $.
 When a branch $b_i$ is connected to one of target points $t_j \in \mathcal{T} = \{t_1, \dotsc , t_{T_{all}}\}$, the target point $t_{i, j}$ is stored in $b_i$.\\
 
-The number of target points $K$ is different on each target frame.
+The number of target points $T_{all}$ is different on each target frame.
 Note that we also take one target point per branch.
 The branch connected to the target point is trimmed at the target point.
 The trimmed length $l_{\text{trim}, i}$ is stored in $b_i$ and use as a penalty for score calculation.
@@ -105,6 +105,12 @@ After a user finishes positioning a branch, the system groups a set of connected
 For detail procedure of this process, please refer Appendix~\ref{sec:group}.
 % Firstly it updates groups, and then detects invalid group conditions, as well as connections to target points.
 After updating the group, invalid group conditions are detected as in Figure~\ref{fig:group}.
+If a branch is connected to a target point, colors of the branch and its belonging group are updated, informing users about the validity of their layouts.
+Taking each branch as edge and joint as node, the graph structure of layouts is analyzed.
+If cyclic structure is detected, the number of cycle $N_{cycle}$ is updated.
+
+
+% When a group bridges a pair of target points, a special score is added and displayed with an animation.
 
 \begin{figure}[ht]
   \begin{center}
@@ -114,43 +120,50 @@ After updating the group, invalid group conditions are detected as in Figure~\re
   \end{center}
 \end{figure}
 
-If a branch is connected to a target point, colors of the branch and its belonging group are updated, informing users about the validity of their layouts.
-When a group bridges a pair of target points, a special score is added and displayed with an animation.
-
-After updating the group, the process evaluates the connections with target points.
+After updating the group, group condition and the connectivity of target points are evaluated.
 Denoting a group and a set of groups as $g_k$ and $\mathcal{G}$ respectively, we check each branch $b_i \in g_k \in \mathcal{G}$ whether it has a connection with a target point or not.
 If it has, the target point is stored in the group $g_k$.
-If there are multiple groups with target points for each group, the entire structure is valid but these groups should be connected together (Figure \ref{fig:group} middle).
+If there are multiple groups with target points for each group, the entire structure is feasible but these groups should be connected together (Figure \ref{fig:group} middle).
 If the group does not have any target point, the group is labeled as \textit{Islanded}, which is structurally infeasible thus counted as a penalty in cost calculation (Figure \ref{fig:group} right).
 If one group has multiple target points, these target points are \textit{bridged}.
-Denoting the number of groups as $N_{group}$, the number of islanded groups as $N_{island}$, the number of bridged target points as $N_{bridged}$, the score of group conditions $\mathcal{S}_{group}$ is calculated as
+
+Denoting the number of groups as $N_{group}$, the number of islanded groups as $N_{island}$, the number of bridged target points as $N_{bridged}$, the sum of distance of bridged target points as $Dist_{bridged}$ the score of group conditions $\mathcal{S}_{group}$ is calculated as
 
 \begin{equation}
  \begin{aligned}
- \mathcal{S}_{\text{group}} =  &\; w_5 N_{island} + w_6 N_{bridged}\\
-   \textrm{s.t.} & \; w_j  \in \mathbb{R} \; \wedge \;   \forall j \in 1, \dotsc , 2 \\
+ \mathcal{S}_{\text{group}} =  &\; w_5 N_{island} + w_6 N_{bridged} + w_7 Dist_{bridged} + w_8 N_{cycle}\\
+   \textrm{s.t.} & \; w_j  \in \mathbb{R} \; \wedge \;   \forall j \in 1, \dotsc , 4 \\
    & \; N_{bridged} \leq T_{all} \\
    & \; N_{island} \leq Br
  \end{aligned}
  \label{eq:score}
 \end{equation}
 
-The game completes when the number of $\mathcal{G}$ is one, and all the target points are connected with the group, which does not have branches with invalid joints.
-
-
-\subsubsection{Score Calculation}
-We calculate the score with weighted sum of following entities: the numbers of valid and invalid joints on each branch as $N$($\mathcal{J}_{\text{valid},i}$) and  $N$($\mathcal{J}_{\text{invalid},i}$) respectively, the number of groups as $N(\mathcal{G} )$, the number of islanded groups as $N(g_{\text{islanded}})$, the number of bridged target points as $N(t_{\text{bridged}, i})$.
-The trimmed length $l_{\text{trim}, i}$ in each $b_i \in \mathcal{B}$.
-The score is weighted sum of these joint and group conditions, denoted in Equation (\ref{eq:score}).
-The weights $w_1 \dotso  w_5$ are non-negative weight coefficients pre-adjusted in advance by the authors.
-
+The game completes when $N_{group}$ is one, and all the target points are connected with the group without invalid joints.
+The state of completion $\mathcal{C_\text{complete}}$ is binary and described as
 
 \begin{equation}
  \begin{aligned}
- Score =  &\; w_1\;  \sum_{1}^{N(\mathcal{B})} N(\mathcal{J}_{\text{valid},i})\; +  \;w_2\; \sum_{1}^{N(\mathcal{B})} N(\mathcal{J}_{\text{invalid},i})\\
-		+ &\; w_3\;  N(g_{\text{islanded}} \in \mathcal{G} )\;				 	 \;+  \;w_4\;  N(t_{\text{bridged}, i}) \; +  \;w_5\; \sum_{1}^{N(\mathcal{B})} l_{\text{trim}, i}
- \\
-   \textrm{s.t.} & \; w_j  \in \mathbb{R} \; \wedge \;   \forall j \in 1, \dotsc , 5
+ \mathcal{C_\text{complete}} =
+ \begin{cases}
+    1,  & \text{if }   N_{group} = 1 \wedge N_{bridged} = T_{all}
+    \wedge  N_{invalid} = 0 \\
+        % &                \; N_{bridged} = T_{all} \\
+        % &                \; N_{invalid} = 0\\
+    0,  & \text{otherwise}
+\end{cases}
+ \end{aligned}
+ \label{eq:complete}
+\end{equation}
+
+\subsubsection{Score Calculation}
+We calculate the score $S_\text{all}$ is calculated as follows.
+Note that the weights $w_1 \dotso  w_9$ are non-negative weight coefficients pre-adjusted in advance by the authors.
+
+\begin{equation}
+ \begin{aligned}
+ S_\text{all} = \mathcal{S}_{\text{joint}} + \mathcal{S}_{\text{group}} + w_9 \mathcal{C_\text{complete}}
+   \textrm{s.t.} & \; w_9  \in \mathbb{R}
  \end{aligned}
  \label{eq:score}
 \end{equation}
