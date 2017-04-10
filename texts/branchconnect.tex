@@ -136,10 +136,10 @@ Denoting the number of groups as $N_{group}$, the number of islanded groups as $
    & \; N_{bridged} \leq T_{all} \\
    & \; N_{island} \leq Br
  \end{aligned}
- \label{eq:score}
+ \label{eq:group}
 \end{equation}
 
-The game completes when $N_{group}$ is one, and all the target points are connected with the group without invalid joints.
+The game is completed when $N_{group}$ is one, and all the target points are connected with the group without invalid joints.
 The state of completion $\mathcal{C_\text{complete}}$ is binary and described as
 
 \begin{equation}
@@ -157,12 +157,12 @@ The state of completion $\mathcal{C_\text{complete}}$ is binary and described as
 \end{equation}
 
 \subsubsection{Score Calculation}
-We calculate the score $S_\text{all}$ is calculated as follows.
+We calculate the score $S_\text{all}$ by adding the results from Eq~\ref{eq:joint}, Eq~\ref{eq:group}, and Eq~\ref{eq:complete}.
 Note that the weights $w_1 \dotso  w_9$ are non-negative weight coefficients pre-adjusted in advance by the authors.
 
 \begin{equation}
  \begin{aligned}
- S_\text{all} = \mathcal{S}_{\text{joint}} + \mathcal{S}_{\text{group}} + w_9 \mathcal{C_\text{complete}}
+ S_\text{all} = \mathcal{S}_{\text{joint}} + \mathcal{S}_{\text{group}} + w_9 \mathcal{C_\text{complete}} \\
    \textrm{s.t.} & \; w_9  \in \mathbb{R}
  \end{aligned}
  \label{eq:score}

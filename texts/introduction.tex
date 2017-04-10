@@ -1,44 +1,35 @@
 \section{Introduction}
 Modern buildings are characterized by its uniformity; built upon the same principle of construction system consisting of standardized building components and its assembly process.
-The standardized construction system is favored because of efficiency in design and production, also the structural performance of the whole building can be analyzed as each component and connection are standardized.
-On the other hand, the excessive standardization induced similar styles of buildings which are criticized for being detached from local contexts ~\cite{frampton1997towards}, thus designers and architects actively use local materials not only as inspirational sources, but also as a catalyst of their design to the local context \cite{oliver1997encyclopedia}.
+The standardized construction system is favored because of efficiency in design and production.
+As a result, the structural performance of the whole building can be analyzed as each component and connection are standardized.
+On the other hand, the excessive standardization induced similar styles of buildings which are criticized for being detached from local contexts ~\cite{frampton1983towards}, thus designers and architects actively use local materials preserving original forms as a catalyst of their design to the local context \cite{oliver1997encyclopedia}.
+As the material is locally obtained, building represents and living get much closer, thus people using the building can easily commit design and fabrication, fostering the sense of belonging to the community \cite{weston2003materials}.
+Traditionally, in case of constructing public and symbolic buildings, such as church, people in a community participated in fund raising or even in construction processes \cite{weston2003materials}.
 
-% As a result, we see similar-looking buildings all over the world.
-%The aesthetic quality of the combination of construction techniques to deal with building components is described as "techtonik".
-% Including management of construction, guidelines for maintenance to building materials and construction techniques, we call it as building starndard.
-Since primitive shelters and huts, traditional construction has used locally found natural materials by preserving their native forms \cite{weston2003materials}.
-Such a direct use of native forms can not compete with highly standardized materials and construction system, however, the uniqueness of them could be a powerful character of a building, especially in combination of standardized systems.
-As the material is locally obtained, building and living get much closer, thus people using the building can easily commit design and fabrication, fostering the sense of belonging to the community.
-In this way, locally obtained materials can easily connect design and the context of built environment, but their irregular properties can not compete with the efficiency of standardized systems.
-According to Pye ~\shortcite{pye1968nature}, craftsmanship is considered as special skills which can adapt its fabrication process negotiating with irregular properties of natural materials.
-Pye described such a skill as ``workmanship with risks'' in contrast to `workmanship with certainty''.
-Such a task is difficult to be automated and these skills are developed through years of training, thus the use of native forms typically inaccessible for end users and costs more than standardized construction system.
+Today, buildings with locally found materials are rare mainly because of economical issue.
+As these materials are typically used by preserving their irregular properties, installation of them requires skilled craftsman for ensuring quality and structural validity, costing more than assembly of standard building parts and components.
+ % can not compete with the efficiency of standardized systems.
+Pye ~\shortcite{pye1968nature} argued craftsmanship as skills which can adapt its fabrication process according to irregular properties of materials and environments, and described as ``workmanship with risks'' in contrast to `workmanship with certainty''.
+Since such a task require years of training thus it is difficult to be automated, the use of them is favored but limited in modern living environment, such as sculpture or other decorative works.
+Also the knowledge to process natural materials are not explicit, thus users can not easily install such materials even though materials themselves are accessible.
+
+%  thus the use of native forms typically inaccessible for end users and costs more than standardized construction system.
+% Therefore, the use of natural materials is favored but there is no systematic use to overcome
 
 This paper aims to make the above-mentioned qualities of materials in native forms more accessible for end users by leveraging digital technologies.
-We use locally obtained branches which can be found almost everywhere not only in countryside but also in urban environment such as parks and along streets.
-Public service takes care of these branches: annual pruning, storing, and chipping or burning with some costs.
+We use locally obtained branches as they are everywhere.
+Usually public service maintain them by pruning, storing, and chipping or burning with some costs.
 The size of branches (from 50 -300 $mm$ in diameter) is too small for furniture or other structural applications as building components.
 It is a challenge for digital design and fabrication to utilize the diverse branches in meaningful ways.
-High-precision but low-cost scanning devices and personal digital fabrication machines make it possible to analyze and control natural materials in diverse native forms.
-
-The key technical difficulty of materials in natives forms is design.
-A possible approach is optimization: minimize an energy function which integrates structural and fabrication costs.
+Theoretically, the combination of low-cost scanning and digital fabrication machines can handle natural materials in diverse native forms.
+The key challenge here is design.
+A possible approach is optimization: minimize an energy function consisting of structural and fabrication costs.
 This approach, however, is limited to particular design scenario with specific materials.
 Furthermore, the concept of optimum solution is well suited to goals such as efficiency or low-cost, but these goals are not the qualities materials in natives forms can compete with standardized construction systems.
 Instead, we take humans in our scan-design-fabricate workflow not only to solve the design problem, but also to provide an opportunity for people to participate in the workflow.
-Traditionally, in case of constructing public and symbolic buildings, such as church, people in a community took initiatives from fund raising to design, or even in construction process.
-% In this way, our method would be applicable to other kinds of materials with diverse shapes.
-
-% The humans-in-the-loop also enrich the connection between users and a building.
-% put emphasis on the forementioned qualities such as diverse solutions not only from the native diverse shapes but also from multiple solutions by people living and using the local community.
-% In modern architecture, user partricipation in design has been commonly explored for enhancing connection between the design and the context as a reaction against the generic buildings.
-
-%Historically, local natural stones and wavy trees have been commonly used to construct primitive huts and shelters \cite{weston2003materials}.
-% Over the years, each unique solution has been converged into a symbolic building style per community, described as "vernacular" in architecture
-
 
 In this paper, we report our case study to design and fabricate an architectural element out of irregularly shaped branches, using our humans-in-the-loop system.
-We developed an online platform where users can post branches found at hand, and design with them through the online game \textit{BranchConnect} \footnote{Please visit and play the game. \url{https://branchconnect.herokuapp.com/start}}.
+An online platform was developed so that users can post branches found at hand and design with them through the online game \textit{BranchConnect} \footnote{Please visit and play the game. \url{https://branchconnect.herokuapp.com/start}}.
 The game system itself helps users to design feasible branch layouts and enable them to fabricate customized joints to connect them together without screws and adhesives.
 The design of our joint extends the traditional orthogonal lap-joints to various angles within a range, freeing the diverse forms of woods from orthogonal connections.
 Physically collected branches are digitally scanned and stored in a cloud database \textit{BranchCollect}, and offline application \textit{Branch Importer} analyzes forms of branches and upload them to the database.
@@ -46,29 +37,9 @@ The simple visual feedback and scoring system of the game guide users to feasibl
 The game system and developed import/export applications are currently limited to branches, however, the principle of human-in-the-loop with design is applicable for other kinds of materials with diverse irregular forms.
 We hope our method sheds lights on materials such as waste from demolition of buildings for various design applications.
 
-% but selected  as well as fabricating differentiated joints by a CNC router.
-% We propose an accessible design and fabrication platform, which allows multiple users to design with diverse irrefular forms of branches.
-
 In summary, our contributions are
 \begin{itemize}
  \item{a workflow enabling to take natural materials in native forms as design components.}
  \item{an online game-based approach to participatory architectural design and fabrication.}
  \item{a method to design and fabricate customized non-orthogonal joints using high-resolution contours.}
 \end{itemize}
-
-
-
-% First of all, non-standard materials are considered to be expensive and less performative compared to standardized building materials.
-% For example, fabricating wooden joints is considered to be an art due to the heterogeneous wooden structure and its precisions, resulting in higher cost than repetitive assembly of standard components \cite{seike1977art}.
-% In the context of fabrication, Pye \shortcite{pye1968nature} described such a skill as ``\textit{workmanship with risks}'', in contrast to ``\textit{workmanship with certainty}''.
-% Due to the complexity, these skills are not fully automated yet, thus we rely on skilled-workers to design and fabricate with these diverse materials.
-% Second of all, building design and construction became highly specialized professions.
-% Not only skills and knowledge, but also designers and architects must communicate with local municiparity to clear legal building codes.
-% Although participatory design has been common in architectural design process, the degree of participation is limited.
-% There is no such a platform to include local community to design and construction.
-
-% In this project, we put emphasis not only on sustainable, economical aspects of architecture, but also on cultural, communal aspects.
-% With the digital technology, we make the design process accessible for users by online browser game.
-% The approach is similar to participatory design process in architecture.
-% We believe that the use of non-standard materials provides an alternative design approach to modern architectural design.
-% As a prospect, we also aim to reveal implicit knowledge to handle such non-standard materials, which has been fostered in craftsmanship.
