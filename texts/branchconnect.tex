@@ -39,10 +39,10 @@ Instead, we put more emphasis on searching fabricatable joints.
 In the game, down-sampled skeletons are used to find the pair of closest skeleton points between two branches.
 While a branch is selected, the system searches the closest skeleton point of the selected branch with other skeletons of available branches.
 If the distance of a pair of the closest skeleton points is smaller than a threshold, the pair is intersected.
-More precise joint calculation with high-resolution contours is further described in Section \ref{sec:fabrication}.
+% For calculation of high-resolution contours is further described in Section \ref{sec:fabrication}.
 
 
-Here, we introduce two important entities in the game: joint and group.
+Here, we introduce two key entities in the game: joint and group.
 A joint is created when an intersecting pair is detected, and the pair forms a group.
 The group is used for evaluating connections between target points.
 The conditions of joint and group are indicated with simple color-code.
@@ -55,8 +55,8 @@ Please find an overview of the game  in Appendix~\ref{sec:game_flow}.
 \subsubsection{Joint Condition}
 \label{sec:joint}
 Joint is the essential entity not only in the game but also in the fabrication process of customized lapped joints.
-Importantly, each pair of branches must have one flipped branch for fabrication constraint (Section \ref{sec:fabrication}).
-Together with this constraint, we set several valid and invalid contraints illustrated in Figure~\ref{fig:joint_condition}.
+Importantly, each pair of branches must have one flipped branch for fabrication constraint (See Figure ~\ref{fig:joint_geometry}).
+Together with this constraint, we set several valid and invalid constraints as illustrated in Figure~\ref{fig:joint_condition}.
 Our joint takes only crossed pair because they are structurally stable, relatively simple to fabricate, and creates diverse designs (Figure~\ref{fig:joint_condition}.1).
 Due to fabrication process with CNC milling, we do not take conditions such as terminal connection, joint at metal fixture, and T-shaped connection (Figure~\ref{fig:joint_condition}.3, \ref{fig:joint_condition}.4, and \ref{fig:joint_condition}.5 respectively) .
 A valid joint's angle stays within a fixed range (Figure~\ref{fig:joint_condition}.1 and 2).
@@ -76,13 +76,15 @@ Note that we accept one joint with a pair of branches, but a branch can have mul
 The process starts from the selected branch $b_i$ and updates joint conditions of the selected branch with paired branches.
 When an intersected pair is detected on a branch $b_i$, the intersection is firstly evaluated as in Figure \ref{fig:joint_condition}, and then labeled as valid joint $j_{valid}$ or $j_{invalid}$ and stored in $b_i$.
 We set the valid angle consraint as $45 \leq |\theta| \leq 145 \and $.
-When a branch $b_i$ is connected to one of target points $t_j \in \mathcal{T} = \{t_1, \dotsc , t_{T_{all}}\}$, the target point $t_{i, j}$ is stored in $b_i$.\\
-
+When a branch $b_i$ is connected to one of target points $t_j \in \mathcal{T} = \{t_1, \dotsc , t_{T_{all}}\}$, the target point $t_{i, j}$ is stored in $b_i$.
 The number of target points $T_{all}$ is different on each target frame.
 Note that we also take one target point per branch.
 The branch connected to the target point is trimmed at the target point.
-The trimmed length $l_{\text{trim}, i}$ is stored in $b_i$ and use as a penalty for score calculation.
+The trimmed length $l_{\text{trim}, i}$ is stored in $b_i$ and used as a penalty for score calculation.
+In this way, the user tries to position the branch as inside of the frame as possible.
+
 Iterating branches $\mathcal{B}$, we get the number of all valid/invalid joints and connected target points, $N_{valid}, N_{invalid}, N{target}$ respectively.
+This process is iteratively executed while a user is positioning a branch while dragging.
 We calculate the score of joint conditions $\mathcal{S}_{\text{joint}}$ as follows.
 
 \begin{equation}
@@ -96,15 +98,11 @@ We calculate the score of joint conditions $\mathcal{S}_{\text{joint}}$ as follo
  \label{eq:joint}
 \end{equation}
 
-In this way, the user tries to position the branch as inside of the frame as possible.
-This process is iteratively executed while a user is positioning a branch while dragging.
-
 \subsubsection{Group Condition}
 
 After a user finishes positioning a branch, the system groups a set of connected branches together.
 For detail procedure of this process, please refer Appendix~\ref{sec:group}.
-% Firstly it updates groups, and then detects invalid group conditions, as well as connections to target points.
-After updating the group, invalid group conditions are detected as in Figure~\ref{fig:group}.
+In this process, invalid group conditions are detected as in Figure~\ref{fig:group}.
 If a branch is connected to a target point, colors of the branch and its belonging group are updated, informing users about the validity of their layouts.
 Taking each branch as edge and joint as node, the graph structure of layouts is analyzed.
 If cyclic structure is detected, the number of cycle $N_{cycle}$ is updated.
